@@ -1,9 +1,10 @@
 import React from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { animated } from "@react-spring/web";
+
 import { cn } from "@/lib/utils";
 import Button from "@/components/ui/button";
 import { InboxIcon, CalendarIcon, CalendarUpIcon, CategoryIcon, ChevronDown, PlusIcon } from "@/components/icons";
-import { NavLink, useLocation } from "react-router-dom";
-import { animated } from "@react-spring/web";
 import { useVerticalCollapsibleAnimation } from "@/lib";
 import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -83,7 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <NavLink to="/create-project">
+                    <NavLink to="/create-project" state={{ backgroundLocation: location }}>
                       <PlusIcon />
                     </NavLink>
                   </TooltipTrigger>
