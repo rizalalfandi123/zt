@@ -7,6 +7,9 @@ import Button from "@/components/ui/button";
 import { InboxIcon, CalendarIcon, CalendarUpIcon, CategoryIcon, ChevronDown, PlusIcon } from "@/components/icons";
 import { useVerticalCollapsibleAnimation } from "@/lib";
 import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useProjectsQuery } from "@/lib/queries";
+import { type Project } from "@/schema";
+import { ProjectItem } from "./project-item";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -24,7 +27,7 @@ const InnerMapMenu = React.memo<{ menus: Menu[]; locationPath: string }>(({ menu
         return (
           <Button
             variant={path === locationPath ? "secondary" : "ghost"}
-            className="w-full justify-start block"
+            className="w-full justify-start block relative"
             asChild
             key={index}
           >
@@ -42,8 +45,20 @@ const InnerMapMenu = React.memo<{ menus: Menu[]; locationPath: string }>(({ menu
   );
 });
 
+const InnerMapProjectItem = React.memo<{ projects: Project[] }>(({ projects }) => {
+  return (
+    <>
+      {projects.map((item, index) => {
+        return <ProjectItem project={item} key={index} />;
+      })}
+    </>
+  );
+});
+
 export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
   const location = useLocation();
+
+  const { data = [], isLoading } = useProjectsQuery();
 
   const { measureRef, setIsOpen, styles, isOpen } = useVerticalCollapsibleAnimation();
 
@@ -63,7 +78,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
   }, []);
 
   return (
-    <div className={cn("pb-12", className)} {...divProps}>
+    <div className={cn("pb-12 select-none", className)} {...divProps}>
       <div className="space-y-2 py-2">
         <div className="space-y-1 px-3 py-2">
           <InnerMapMenu menus={defaultMenu} locationPath={location.pathname} />
@@ -115,11 +130,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
               </TooltipProvider>
             </div>
           </div>
-          <animated.div className="space-y-1 overflow-y-hidden" style={styles}>
-            <div ref={measureRef}>
-              <InnerMapMenu menus={defaultMenu} locationPath={location.pathname} />
-            </div>
-          </animated.div>
+          {isLoading ? (
+            <div>loading</div>
+          ) : (
+            <animated.div className="space-y-1 overflow-y-hidden" style={styles}>
+              <div ref={measureRef}>
+                <InnerMapProjectItem projects={data} />
+              </div>
+            </animated.div>
+          )}
         </div>
       </div>
     </div>

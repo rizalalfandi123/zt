@@ -26,4 +26,8 @@ const TooltipContent = React.forwardRef<
 
 TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
+TooltipProvider.defaultProps = {
+  delayDuration: 300,
+};
+
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

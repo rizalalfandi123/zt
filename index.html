@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -15,10 +15,74 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+      @-moz-keyframes blink {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @-webkit-keyframes blink {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      /* IE */
+      @-ms-keyframes blink {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      /* Opera and prob css3 final iteration */
+      @keyframes blink {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      .blink-image {
+        -moz-animation: blink normal 1.5s infinite ease-in-out; /* Firefox */
+        -webkit-animation: blink normal 1.5s infinite ease-in-out; /* Webkit */
+        -ms-animation: blink normal 1.5s infinite ease-in-out; /* IE */
+        animation: blink normal 1.5s infinite ease-in-out; /* Opera and prob css3 final iteration */
+      }
+    </style>
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <img
+        src="/vite.svg"
+        width="120"
+        height="120"
+        class="blink-image"
+        style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%)"
+      />
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

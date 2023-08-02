@@ -1,8 +1,8 @@
 import React from "react";
 
-const MIN_SIZE = 180;
+const MIN_SIZE = 240;
 
-const MAX_SIZE = 420;
+const MAX_SIZE = 480;
 
 type UseResizableNavbarArgs = {
   min?: number;
