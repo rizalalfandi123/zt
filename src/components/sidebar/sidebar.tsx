@@ -2,12 +2,11 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { animated } from "@react-spring/web";
 
-import { cn } from "@/lib/utils";
+import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn, useProjectsQuery } from "@/lib";
 import Button from "@/components/ui/button";
 import { InboxIcon, CalendarIcon, CalendarUpIcon, CategoryIcon, ChevronDown, PlusIcon } from "@/components/icons";
 import { useVerticalCollapsibleAnimation } from "@/lib";
-import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useProjectsQuery } from "@/lib/queries";
 import { type Project } from "@/schema";
 import { ProjectItem } from "./project-item";
 

@@ -1,4 +1,6 @@
 import React from "react";
+import { useAppDispatch, useAppSelector } from ".";
+import { appSettingsActions } from "@/stores/app-settings.slice";
 
 const MIN_SIZE = 240;
 
@@ -20,7 +22,14 @@ export function useResizableNavbar<T extends HTMLElement>(
 ): UseResizableNavbarReturnValue<T> {
   const { max = MAX_SIZE, min = MIN_SIZE } = args;
 
-  const [sidebarWidth, setSidebarWidth] = React.useState<number>(min);
+  const dispatch = useAppDispatch();
+
+  const sidebarWidth = useAppSelector((store) => store.appSettings.value.sidebarWidth);
+
+  const setSidebarWidth = (newWidth: number) => {
+    console.log({ newWidth });
+    dispatch(appSettingsActions.setSidebarWidth(newWidth));
+  };
 
   const [isResizeSidebar, setIsResizeSidebar] = React.useState<boolean>(false);
 

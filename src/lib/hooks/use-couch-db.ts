@@ -32,3 +32,6 @@ export function useCouchDB() {
     db: localDb,
   };
 }
+
+const db = new PouchDb("test");
+export { db };

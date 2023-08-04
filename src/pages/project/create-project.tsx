@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Button from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useCreateProject } from "@/lib/queries";
 import { v4 as uuid } from "uuid";
@@ -23,7 +23,6 @@ const ModalCreateProject = () => {
       color: "amber",
     },
   });
-
 
   const onSubmit = async (data: ProjectForm) => {
     const id = uuid({});
@@ -49,7 +48,7 @@ const ModalCreateProject = () => {
         <DialogHeader>
           <DialogTitle>Add Project</DialogTitle>
         </DialogHeader>
-        
+
         <FormCreateProject form={form} />
 
         <DialogFooter>
@@ -60,4 +59,4 @@ const ModalCreateProject = () => {
   );
 };
 
-export default ModalCreateProject
+export default ModalCreateProject;

@@ -27,7 +27,7 @@ const ModalUpdateProject = () => {
 
       return {
         color: data?.color ?? "amber",
-        name: data?.name ?? '',
+        name: data?.name ?? "",
       };
     },
   });

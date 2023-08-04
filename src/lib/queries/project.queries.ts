@@ -76,14 +76,14 @@ export const useProjectQuery = (id: string) => {
       try {
         const data = await db.get<Projects>(projectId);
 
-        const project = data.items.find(project => project._id === id)
+        const project = data.items.find((project) => project._id === id);
 
-        return project
+        return project;
       } catch (error) {
         return undefined;
       }
     },
     queryKey: [id],
-    enabled: false
+    enabled: false,
   });
 };

@@ -1,20 +1,13 @@
-import { Project } from "@/schema";
-import Button from "@/components/ui/button";
-import { DotsIcon, PointIcon } from "../icons";
+import React from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { cn } from "@/lib";
-import { projectIndicator } from "@/lib/constants";
-import { useState } from "react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useDeleteProject } from "@/lib/queries";
 import { useQueryClient } from "@tanstack/react-query";
+
+import * as Dropdown from "@/components/ui/dropdown-menu";
+import Button from "@/components/ui/button";
+import { Project } from "@/schema";
+import { cn, useDeleteProject, projectIndicator } from "@/lib";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { DotsIcon, PointIcon } from "@/components/icons";
 
 interface ProjectItemProps {
   project: Project;
@@ -31,7 +24,7 @@ export const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) =>
 
   const { mutateAsync: deleteProject } = useDeleteProject();
 
-  const [showOption, setShowOption] = useState<boolean>(false);
+  const [showOption, setShowOption] = React.useState<boolean>(false);
 
   const handleDeleteProject = async () => {
     await deleteProject(project._id);
@@ -61,27 +54,27 @@ export const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) =>
           </div>
         </NavLink>
 
-        <DropdownMenu>
+        <Dropdown.DropdownMenu>
           <TooltipProvider>
             <Tooltip>
-              <DropdownMenuTrigger asChild>
+              <Dropdown.DropdownMenuTrigger asChild>
                 <TooltipTrigger asChild>
                   <Button variant="ghost" size="icon" className={cn(["invisible", { visible: showOption }])}>
                     <DotsIcon />
                   </Button>
                 </TooltipTrigger>
-              </DropdownMenuTrigger>
+              </Dropdown.DropdownMenuTrigger>
               <TooltipContent>
                 <p>More Project Action</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={handleDeleteProject}>Delete</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleUpdateProject}>Edit</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          <Dropdown.DropdownMenuContent>
+            <Dropdown.DropdownMenuItem onClick={handleDeleteProject}>Delete</Dropdown.DropdownMenuItem>
+            <Dropdown.DropdownMenuSeparator />
+            <Dropdown.DropdownMenuItem onClick={handleUpdateProject}>Edit</Dropdown.DropdownMenuItem>
+          </Dropdown.DropdownMenuContent>
+        </Dropdown.DropdownMenu>
       </div>
     </Button>
   );

@@ -1,7 +1,8 @@
 import { type FieldValues, type FieldPath, type UseControllerProps, Controller } from "react-hook-form";
-import { FormControl, FormFieldContext, FormItem, FormLabel, FormMessage } from "./form";
-import { Select, SelectTrigger, SelectValue, SelectContent } from "@/components/ui/select";
 import { type SelectItemProps } from "@radix-ui/react-select";
+
+import { Select, SelectTrigger, SelectValue, SelectContent } from "@/components/ui/select";
+import { FormControl, FormFieldContext, FormItem, FormLabel, FormMessage } from "./form";
 
 interface SelectFieldProps<
   TFieldValues extends FieldValues = FieldValues,
