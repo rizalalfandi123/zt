@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { useResizableNavbar } from "@/lib";
+import { useResizableNavbar } from "@/hooks";
 
 interface LayoutProps {
   header: React.ReactNode;
@@ -15,14 +15,18 @@ export const Layout: React.FunctionComponent<LayoutProps> = (props) => {
     <div className="h-dynamic-screen flex flex-col">
       <header className="w-full basis-11">{header}</header>
 
-      <div className="w-full grow flex">
-        <aside style={{ flexBasis: `${sidebarWidth}px` }}>{sidebar}</aside>
+      <div className="grow flex">
+        <aside className="shrink-0" style={{ width: `${sidebarWidth}px` }}>
+          {sidebar}
+        </aside>
+
         <div
-          className="w-2 hover:cursor-ew-resize active:cursor-ew-resize hover:bg-accent active:bg-accent"
+          className="h-full shrink-0 basis-2 hover:cursor-ew-resize active:cursor-ew-resize hover:bg-accent active:bg-accent"
           onMouseDown={onMouseDown}
           onTouchStart={onTouchStart}
         />
-        <main className="grow">
+
+        <main className="grow overflow-x-auto px-2">
           <Outlet />
         </main>
       </div>

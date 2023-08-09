@@ -1,14 +1,15 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import Button from "@/components/ui/button";
+import Tooltip from "@/components/ui/tooltip";
+import ProjectItem from "@/components/sidebar/project-item";
+
 import { animated } from "@react-spring/web";
 
-import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn, useProjectsQuery } from "@/lib";
-import Button from "@/components/ui/button";
+import { NavLink, useLocation } from "react-router-dom";
 import { InboxIcon, CalendarIcon, CalendarUpIcon, CategoryIcon, ChevronDown, PlusIcon } from "@/components/icons";
-import { useVerticalCollapsibleAnimation } from "@/lib";
-import { type Project } from "@/schema";
-import { ProjectItem } from "./project-item";
+import { useVerticalCollapsibleAnimation, useAppSelector } from "@/hooks";
+import { type Project } from "@/schema-and-types";
+import { cn } from "@/lib";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -19,45 +20,10 @@ type Menu = {
   suffix?: React.ReactNode;
 };
 
-const InnerMapMenu = React.memo<{ menus: Menu[]; locationPath: string }>(({ menus, locationPath }) => {
-  return (
-    <>
-      {menus.map(({ icon, label, path, suffix }, index) => {
-        return (
-          <Button
-            variant={path === locationPath ? "secondary" : "ghost"}
-            className="w-full justify-start block relative"
-            asChild
-            key={index}
-          >
-            <NavLink to={path} className={cn({ "flex justify-between": suffix !== undefined })}>
-              <div className="flex gap-2 items-center">
-                {icon} {label}
-              </div>
-
-              {suffix}
-            </NavLink>
-          </Button>
-        );
-      })}
-    </>
-  );
-});
-
-const InnerMapProjectItem = React.memo<{ projects: Project[] }>(({ projects }) => {
-  return (
-    <>
-      {projects.map((item, index) => {
-        return <ProjectItem project={item} key={index} />;
-      })}
-    </>
-  );
-});
-
 export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
   const location = useLocation();
 
-  const { data = [], isLoading } = useProjectsQuery();
+  const projects = useAppSelector((store) => store.projects.value);
 
   const { measureRef, setIsOpen, styles, isOpen } = useVerticalCollapsibleAnimation();
 
@@ -95,22 +61,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
               Projects
             </NavLink>
             <div className="flex gap-1">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
+              <Tooltip.Provider>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
                     <NavLink to="/create-project" state={{ backgroundLocation: location }}>
                       <PlusIcon />
                     </NavLink>
-                  </TooltipTrigger>
-                  <TooltipContent>
+                  </Tooltip.Trigger>
+                  <Tooltip.Content>
                     <p>Add Projects</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                  </Tooltip.Content>
+                </Tooltip.Root>
+              </Tooltip.Provider>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
+              <Tooltip.Provider>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
                     <button onClick={() => setIsOpen((prev) => !prev)}>
                       <ChevronDown
                         className={cn([
@@ -121,25 +87,57 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
                         ])}
                       />
                     </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
+                  </Tooltip.Trigger>
+                  <Tooltip.Content>
                     <p>Toggle list of projects</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                  </Tooltip.Content>
+                </Tooltip.Root>
+              </Tooltip.Provider>
             </div>
           </div>
-          {isLoading ? (
-            <div>loading</div>
-          ) : (
-            <animated.div className="space-y-1 overflow-y-hidden" style={styles}>
-              <div ref={measureRef}>
-                <InnerMapProjectItem projects={data} />
-              </div>
-            </animated.div>
-          )}
+
+          <animated.div className="space-y-1 overflow-y-hidden" style={styles}>
+            <div ref={measureRef}>
+              <InnerMapProjectItem projects={projects} />
+            </div>
+          </animated.div>
         </div>
       </div>
     </div>
   );
 };
+
+const InnerMapMenu = React.memo<{ menus: Menu[]; locationPath: string }>(({ menus, locationPath }) => {
+  return (
+    <>
+      {menus.map(({ icon, label, path, suffix }, index) => {
+        return (
+          <Button
+            variant={path === locationPath ? "secondary" : "ghost"}
+            className="w-full justify-start block relative"
+            asChild
+            key={index}
+          >
+            <NavLink to={path} className={cn({ "flex justify-between": suffix !== undefined })}>
+              <div className="flex gap-2 items-center">
+                {icon} {label}
+              </div>
+
+              {suffix}
+            </NavLink>
+          </Button>
+        );
+      })}
+    </>
+  );
+});
+
+const InnerMapProjectItem = React.memo<{ projects: Record<string, Project> }>(({ projects }) => {
+  return (
+    <>
+      {Object.keys(projects).map((key, index) => {
+        return <ProjectItem project={projects[key]} key={index} />;
+      })}
+    </>
+  );
+});

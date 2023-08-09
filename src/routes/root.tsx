@@ -8,6 +8,7 @@ const Upcoming = React.lazy(() => import("@/pages/upcoming"));
 const FilterAndLabel = React.lazy(() => import("@/pages/filter-and-label"));
 const CreateProject = React.lazy(() => import("@/pages/project/create-project"));
 const UpdateProject = React.lazy(() => import("@/pages/project/update-project"));
+const Project = React.lazy(() => import("@/pages/project/project"));
 
 const Layout = React.lazy(() => import("@/components/layout"));
 const Sidebar = React.lazy(() => import("@/components/sidebar"));
@@ -57,6 +58,14 @@ export const AppRoutes = () => {
             element={
               <React.Suspense fallback={<Indicator />}>
                 <FilterAndLabel />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="/project/:id"
+            element={
+              <React.Suspense fallback={<Indicator />}>
+                <Project />
               </React.Suspense>
             }
           />

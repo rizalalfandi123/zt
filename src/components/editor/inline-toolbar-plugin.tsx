@@ -1,14 +1,18 @@
-import React from "react"
+import React from "react";
 
 import { FORMAT_TEXT_COMMAND, TextFormatType } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
-import { IconBold, IconItalic, IconUnderline, IconStrikethrough } from "@/components/icons";
-import Button from "@/components/ui/button";
+import { IconBold, IconItalic, IconUnderline, IconStrikethrough, type Icon } from "@/components/icons";
+import Button, { ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib";
 
 interface ToolbarPluginProps extends React.ComponentProps<"div"> {
   isOpen: boolean;
+}
+
+interface ToolItem extends Pick<ButtonProps, "onClick"> {
+  icon: Icon;
 }
 
 const Component: React.ForwardRefRenderFunction<HTMLDivElement, ToolbarPluginProps> = (props, ref) => {
@@ -24,29 +28,42 @@ const Component: React.ForwardRefRenderFunction<HTMLDivElement, ToolbarPluginPro
 
   if (!isOpen) return null;
 
+  const toolItems: ToolItem[] = [
+    {
+      icon: IconBold,
+      onClick: formatText("bold"),
+    },
+    {
+      icon: IconItalic,
+      onClick: formatText("italic"),
+    },
+    {
+      icon: IconUnderline,
+      onClick: formatText("underline"),
+    },
+    {
+      icon: IconStrikethrough,
+      onClick: formatText("strikethrough"),
+    },
+  ];
+
   return (
     <div
       {...divProps}
       className={cn(["p-1 bg-background rounded-lg flex gap-1 border border-border", className])}
       ref={ref}
     >
-      <Button size="icon" variant="ghost" onClick={formatText("bold")}>
-        <IconBold />
-      </Button>
-
-      <Button size="icon" variant="ghost" onClick={formatText("italic")}>
-        <IconItalic />
-      </Button>
-
-      <Button size="icon" variant="ghost" onClick={formatText("underline")}>
-        <IconUnderline />
-      </Button>
-
-      <Button size="icon" variant="ghost" onClick={formatText("strikethrough")}>
-        <IconStrikethrough />
-      </Button>
+      {toolItems.map(({ icon: Icon, onClick }, key) => {
+        return (
+          <Button key={key} size="icon" variant="ghost" onClick={onClick} className="w-8 h-8">
+            <Icon className="w-5 h-5" />
+          </Button>
+        );
+      })}
     </div>
   );
 };
 
-export const InlineToolbarPlugin = React.forwardRef<HTMLDivElement, ToolbarPluginProps>(Component);
+const InlineToolbarPlugin = React.forwardRef<HTMLDivElement, ToolbarPluginProps>(Component);
+
+export default InlineToolbarPlugin;

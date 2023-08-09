@@ -68,6 +68,12 @@
   }
 }
 
+@layer utilities {
+  .underline-and-line-through {
+    text-decoration: underline line-through;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;

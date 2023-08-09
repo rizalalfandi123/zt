@@ -5,8 +5,6 @@ export const projectFormSchema = z.object({
   color: z.string().nonempty(),
 });
 
-export type ProjectForm = z.infer<typeof projectFormSchema>;
-
-export interface Project extends ProjectForm {
-  _id: string;
-}
+export const todoSectionFormSchema = z.object({
+  name: z.string().nonempty(),
+});

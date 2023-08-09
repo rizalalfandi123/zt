@@ -1,14 +1,15 @@
 import React from "react";
-import { Draggable, type DraggableProps } from "@hello-pangea/dnd";
-
 import Button from "@/components/ui/button";
 import Editor from "@/components/editor";
 import Checkbox from "@/components/ui/checkbox";
-import { DotsIcon } from "../icons";
-import { TodoForm, TodoFormProps } from "./todo-form";
-import { useAppDispatch, useAppSelector, cn, Todo as ITodo  } from "@/lib";
+
+import { Draggable, type DraggableProps } from "@hello-pangea/dnd";
+import { DotsIcon } from "@/components/icons";
+import { TodoForm, TodoFormProps } from "@/components/todo/todo-form";
+import { Todo as ITodo } from "@/schema-and-types";
 import { uiActions } from "@/stores/ui.slice";
-import { todoActions } from "@/stores/todo.slice";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { cn } from "@/lib";
 
 export interface TodoProps extends React.ComponentProps<"div"> {
   todo: ITodo;
@@ -51,15 +52,13 @@ const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
   const isEdit = useAppSelector((store) => store.ui.value.openedTodoForm === todo.id);
 
   if (isEdit) {
-    const handleSaveEditedTodo: TodoFormProps["onSave"] = (formResult) => {
-      const todoContext: Partial<ITodo> = {
-        ...formResult,
-        id: todo.id,
-      };
-
-      dispatch(todoActions.updateTodo({ todo: todoContext, boardId }));
-
-      dispatch(uiActions.setOpenedTodoForm(null));
+    const handleSaveEditedTodo: TodoFormProps["onSave"] = () => {
+      // const todoContext: Partial<ITodo> = {
+      //   ...formResult,
+      //   id: todo.id,
+      // };
+      // dispatch(todoActions.updateTodo({ todo: todoContext, boardId }));
+      // dispatch(uiActions.setOpenedTodoForm(null));
     };
 
     return (
@@ -118,8 +117,6 @@ const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
                 )}
               </div>
             </div>
-
-           
           </div>
         );
       }}

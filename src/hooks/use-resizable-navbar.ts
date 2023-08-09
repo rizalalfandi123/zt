@@ -27,7 +27,6 @@ export function useResizableNavbar<T extends HTMLElement>(
   const sidebarWidth = useAppSelector((store) => store.appSettings.value.sidebarWidth);
 
   const setSidebarWidth = (newWidth: number) => {
-    console.log({ newWidth });
     dispatch(appSettingsActions.setSidebarWidth(newWidth));
   };
 

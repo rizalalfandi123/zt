@@ -218,11 +218,11 @@ export const XIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...iconProps}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -232,22 +232,22 @@ export const XIcon: Icon = ({ className, ...iconProps }) => {
   );
 };
 
-export const IconDeviceFloppy: Icon = ({ className, ...iconProps }) => {
+export const SendIcon: Icon = ({ className, ...iconProps }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...iconProps}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-      <path d="M18 6l-12 12"></path>
-      <path d="M6 6l12 12"></path>
+      <path d="M10 14l11 -11"></path>
+      <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"></path>
     </svg>
   );
 };
@@ -258,16 +258,16 @@ export const IconStrikethrough: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...iconProps}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-      <path d="M18 6l-12 12"></path>
-      <path d="M6 6l12 12"></path>
+      <path d="M5 12l14 0"></path>
+      <path d="M16 6.5a4 2 0 0 0 -4 -1.5h-1a3.5 3.5 0 0 0 0 7h2a3.5 3.5 0 0 1 0 7h-1.5a4 2 0 0 1 -4 -1.5"></path>
     </svg>
   );
 };
@@ -278,16 +278,16 @@ export const IconUnderline: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...iconProps}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-      <path d="M18 6l-12 12"></path>
-      <path d="M6 6l12 12"></path>
+      <path d="M7 5v5a5 5 0 0 0 10 0v-5"></path>
+      <path d="M5 19h14"></path>
     </svg>
   );
 };
@@ -298,16 +298,17 @@ export const IconItalic: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...iconProps}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-      <path d="M18 6l-12 12"></path>
-      <path d="M6 6l12 12"></path>
+      <path d="M11 5l6 0"></path>
+      <path d="M7 19l6 0"></path>
+      <path d="M14 5l-4 14"></path>
     </svg>
   );
 };
@@ -318,16 +319,16 @@ export const IconBold: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...iconProps}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-      <path d="M18 6l-12 12"></path>
-      <path d="M6 6l12 12"></path>
+      <path d="M7 5h6a3.5 3.5 0 0 1 0 7h-6z"></path>
+      <path d="M13 12h1a3.5 3.5 0 0 1 0 7h-7v-7"></path>
     </svg>
   );
 };
