@@ -1,20 +1,20 @@
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import Dialog from "@/components/ui/dialog";
+
 import Button from "@/components/ui/button";
+import FormProject from "@/pages/project/form-project";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useCreateProject } from "@/lib/queries";
 import { v4 as uuid } from "uuid";
-import { projectFormSchema, type ProjectForm } from "@/schema/project.schema";
-import { useQueryClient } from "@tanstack/react-query";
-import { FormCreateProject } from "./form-create-project";
+import { projectFormSchema, type ProjectForm } from "@/schema-and-types";
+import { useAppDispatch } from "@/hooks";
+import { projectActions } from "@/stores/project-store";
 
 const ModalCreateProject = () => {
   const navigate = useNavigate();
 
-  const queryClient = useQueryClient();
-
-  const { mutateAsync } = useCreateProject();
+  const dispatch = useAppDispatch();
 
   const form = useForm<ProjectForm>({
     resolver: zodResolver(projectFormSchema),
@@ -24,38 +24,34 @@ const ModalCreateProject = () => {
     },
   });
 
-  const onSubmit = async (data: ProjectForm) => {
-    const id = uuid({});
+  const onSubmit = (data: ProjectForm) => {
+    const id = uuid();
 
-    await mutateAsync({ ...data, _id: id });
-
-    queryClient.invalidateQueries({ queryKey: ["PROJECTS"] });
+    dispatch(projectActions.createProject({ ...data, isFavourite: false, view: "BOARD", todoSections: [], id }));
 
     navigate(-1);
   };
 
   return (
-    <Dialog
+    <Dialog.Root
       modal
       open
       onOpenChange={(nextValue) => {
-        if (nextValue === false) {
-          navigate(-1);
-        }
+        if (!nextValue) navigate(-1);
       }}
     >
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add Project</DialogTitle>
-        </DialogHeader>
+      <Dialog.Content className="sm:max-w-[425px]">
+        <Dialog.Header>
+          <Dialog.Title>Add Project</Dialog.Title>
+        </Dialog.Header>
 
-        <FormCreateProject form={form} />
+        <FormProject form={form} />
 
-        <DialogFooter>
+        <Dialog.Footer>
           <Button onClick={form.handleSubmit(onSubmit)}>Save changes</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   );
 };
 

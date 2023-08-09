@@ -1,15 +1,15 @@
-import React from "react"
+import React from "react";
+import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
+import AutoFucusPlugin from "@/components/editor/auto-focus-plugin";
+import InlineToolbarPlugin from "@/components/editor/inline-toolbar-plugin";
 
 import { EditorThemeClasses } from "lexical";
 import { type InitialConfigType, LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable, type Props as ContentEditableProps } from "@lexical/react/LexicalContentEditable";
-import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
-
-import { InlineToolbarPlugin } from "./inline-toolbar-plugin";
-import { useInlineToolbar, cn } from "@/lib";
-import { AutoFucusPlugin } from "./auto-focus-plugin";
+import { cn } from "@/lib";
+import { useInlineToolbar } from "@/hooks";
 
 type OnEditorChange = Parameters<typeof OnChangePlugin>[0]["onChange"];
 

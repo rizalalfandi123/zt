@@ -1,24 +1,26 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 
 import { appSettingsReducer } from "./app-settings.slice";
 import { todoReducer } from "./todo.slice";
 import { uiReducer } from "./ui.slice";
+import { projectReducers } from "@/stores/project-store";
+import { todoBoardReducers } from "@/stores/todo-column-store";
 
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import { localForageStorage } from "@/lib";
 
-const persistConfig = {
-  key: "zal-todo",
-  storage,
-  blacklist: ["ui"],
-};
+const allReducers = combineReducers({
+  appSettings: appSettingsReducer,
+  ui: uiReducer,
+  todo: todoReducer,
+  projects: projectReducers,
+  todoBoard: todoBoardReducers
+});
 
-const rootReducers = combineReducers({ appSettings: appSettingsReducer, todo: todoReducer, ui: uiReducer });
-
-const persistedReducers = persistReducer(persistConfig, rootReducers);
+const rootReducers = persistReducer({ key: "ZAL_TODO", storage: localForageStorage, blacklist: ["ui"] }, allReducers);
 
 const store = configureStore({
-  reducer: persistedReducers,
+  reducer: rootReducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

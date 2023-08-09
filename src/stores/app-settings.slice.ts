@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import type { AppTheme, ScreenMode } from "@/lib";
+import type { AppTheme, ScreenMode } from "@/schema-and-types";
 
 type AppSettingsState = {
   value: {

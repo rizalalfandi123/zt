@@ -6,7 +6,7 @@ export interface AutoFucusPluginProps {
   enable?: boolean;
 }
 
-export const AutoFucusPlugin: React.FunctionComponent<AutoFucusPluginProps> = ({ enable = true }) => {
+const AutoFucusPlugin: React.FunctionComponent<AutoFucusPluginProps> = ({ enable = true }) => {
   const [editor] = useLexicalComposerContext();
 
   React.useEffect(() => {
@@ -17,3 +17,5 @@ export const AutoFucusPlugin: React.FunctionComponent<AutoFucusPluginProps> = ({
 
   return null;
 };
+
+export default AutoFucusPlugin

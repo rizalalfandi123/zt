@@ -1,7 +1,8 @@
-import type { Todo, TodoBoard, TodoMap } from "@/lib";
+import type { Todo, TodoBoard, TodoMap } from "@/schema-and-types";
+import { type TodoSection } from "@/schema-and-types";
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initial: TodoMap = { "board satu": [], "board dua": [] };
+const initial: TodoMap = {};
 
 type TodoState = {
   value: TodoBoard;
@@ -11,6 +12,8 @@ type TodoReducers = {
   setBoard: (state: TodoState, payload: PayloadAction<TodoBoard>) => void;
   createNewTodo: (state: TodoState, payload: PayloadAction<{ boardId: string; todo: Todo }>) => void;
   updateTodo: (state: TodoState, payload: PayloadAction<{ boardId: string; todo: Partial<Todo> }>) => void;
+  createNewSection: (state: TodoState, payload: PayloadAction<TodoSection>) => void;
+  // updateBoard: (state: TodoState) => void;
 };
 
 const initialState: TodoState = {
@@ -18,12 +21,11 @@ const initialState: TodoState = {
 };
 
 const updateTodo: TodoReducers["updateTodo"] = (state, { payload }) => {
-  const indexTodoContext = state.value.columns[payload.boardId].findIndex((todo) => todo.id === payload.todo.id);
+  const indexTodoContext = state.value.columns[payload.boardId].todo.findIndex((todo) => todo.id === payload.todo.id);
 
   if (indexTodoContext !== -1) {
-    console.log({ indexTodoContext, payload, list: state.value });
-    state.value.columns[payload.boardId][indexTodoContext] = {
-      ...state.value.columns[payload.boardId][indexTodoContext],
+    state.value.columns[payload.boardId].todo[indexTodoContext] = {
+      ...state.value.columns[payload.boardId].todo[indexTodoContext],
       ...payload.todo,
     };
   }
@@ -31,13 +33,28 @@ const updateTodo: TodoReducers["updateTodo"] = (state, { payload }) => {
 
 const createNewTodo: TodoReducers["createNewTodo"] = (state, { payload }) => {
   const boardContext = state.value.columns[payload.boardId];
-  boardContext.push(payload.todo);
+
+  const boardContextTodo = state.value.columns[payload.boardId].todo;
+
+  boardContextTodo.push(payload.todo);
+
+  boardContext.todo = boardContextTodo;
+
   state.value.columns[payload.boardId] = boardContext;
 };
 
 const setBoard: TodoReducers["setBoard"] = (state, { payload }) => {
   state.value = payload;
 };
+
+const createNewSection: TodoReducers["createNewSection"] = (state, { payload }) => {
+  const existColumns = state.value.columns;
+
+  existColumns[payload.id] = { ...payload, todo: [] };
+
+  state.value.ordered = Object.keys(existColumns);
+};
+
 
 export const todoSlice = createSlice<TodoState, TodoReducers>({
   name: "TODO",
@@ -46,6 +63,7 @@ export const todoSlice = createSlice<TodoState, TodoReducers>({
     createNewTodo,
     updateTodo,
     setBoard,
+    createNewSection,
   },
 });
 

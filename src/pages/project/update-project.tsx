@@ -1,69 +1,55 @@
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import Dialog from "@/components/ui/dialog";
+
 import Button from "@/components/ui/button";
+import FormProject from "@/pages/project/form-project";
+
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { useCreateProject, useProjectQuery } from "@/lib/queries";
-import { v4 as uuid } from "uuid";
-import { projectFormSchema, type ProjectForm } from "@/schema/project.schema";
-import { useQueryClient } from "@tanstack/react-query";
-import { FormCreateProject } from "./form-create-project";
+import { projectFormSchema, type ProjectForm } from "@/schema-and-types";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { projectActions } from "@/stores/project-store";
 
 const ModalUpdateProject = () => {
   const navigate = useNavigate();
 
+  const dispatch = useAppDispatch();
+
   const id = useParams()["id"] as string;
 
-  const { refetch } = useProjectQuery(id);
-
-  const queryClient = useQueryClient();
-
-  const { mutateAsync } = useCreateProject();
+  const projects = useAppSelector((store) => store.projects.value);
 
   const form = useForm<ProjectForm>({
     resolver: zodResolver(projectFormSchema),
-    defaultValues: async () => {
-      const { data } = await refetch();
-
-      return {
-        color: data?.color ?? "amber",
-        name: data?.name ?? "",
-      };
-    },
+    defaultValues: projects[id],
   });
 
-  const onSubmit = async (data: ProjectForm) => {
-    const id = uuid({});
-
-    await mutateAsync({ ...data, _id: id });
-
-    queryClient.invalidateQueries({ queryKey: ["PROJECTS"] });
+  const onSubmit: SubmitHandler<ProjectForm> = (data) => {
+    dispatch(projectActions.updateProject({ id, ...data }));
 
     navigate(-1);
   };
 
   return (
-    <Dialog
+    <Dialog.Root
       modal
       open
       onOpenChange={(nextValue) => {
-        if (nextValue === false) {
-          navigate(-1);
-        }
+        if (!nextValue) navigate(-1);
       }}
     >
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Edit Project</DialogTitle>
-        </DialogHeader>
+      <Dialog.Content className="sm:max-w-[425px]">
+        <Dialog.Header>
+          <Dialog.Title>Edit Project</Dialog.Title>
+        </Dialog.Header>
 
-        <FormCreateProject form={form} />
+        <FormProject form={form} />
 
-        <DialogFooter>
+        <Dialog.Footer>
           <Button onClick={form.handleSubmit(onSubmit)}>Save changes</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   );
 };
 

@@ -3,8 +3,10 @@ import type { EditorState, LexicalEditor } from "lexical";
 
 import Button from "@/components/ui/button";
 import Editor from "@/components/editor";
-import { XIcon, IconDeviceFloppy } from "@/components/icons";
-import { type Todo, useAppSelector, cn } from "@/lib";
+import { XIcon, SendIcon } from "@/components/icons";
+import {cn } from "@/lib";
+import { Todo } from "@/schema-and-types";
+import { useAppSelector } from "@/hooks";
 
 interface EditorRef {
   editorState: EditorState;
@@ -16,6 +18,7 @@ type TodoFormResult = Pick<Todo, "title" | "description">;
 export interface TodoFormProps {
   onSave?: (todo: TodoFormResult, titleEditorRef: EditorRef | null, descriptionEditorRef: EditorRef | null) => void;
   onClose?: () => void;
+  containerClassname?: string;
   initialValue?: {
     description?: string;
     title: string;
@@ -23,7 +26,7 @@ export interface TodoFormProps {
 }
 
 export const TodoForm: React.FunctionComponent<TodoFormProps> = (props) => {
-  const { initialValue, onSave, onClose } = props;
+  const { initialValue, onSave, onClose, containerClassname } = props;
 
   const titleEditorRef = useRef<EditorRef | null>(null);
 
@@ -38,7 +41,7 @@ export const TodoForm: React.FunctionComponent<TodoFormProps> = (props) => {
       ? JSON.stringify(descriptionEditorRef.current.editorState.toJSON())
       : initialValue?.description
       ? initialValue.description
-      : undefined;
+      : "";
 
     const formResult: TodoFormResult = {
       title,
@@ -53,6 +56,7 @@ export const TodoForm: React.FunctionComponent<TodoFormProps> = (props) => {
       className={cn([
         "p-2 border flex flex-col border-slate-700 bg-background transition-all duration-300 rounded-lg w-full",
         { "opacity-0": isUserDraggingTodo },
+        containerClassname
       ])}
     >
       <Editor
@@ -87,7 +91,7 @@ export const TodoForm: React.FunctionComponent<TodoFormProps> = (props) => {
           </Button>
 
           <Button size="icon" variant="ghost" onClick={handleSave}>
-            <IconDeviceFloppy />
+            <SendIcon />
           </Button>
         </div>
       </div>
