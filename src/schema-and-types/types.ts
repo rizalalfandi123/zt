@@ -46,6 +46,7 @@ export interface Todo {
 export interface Project extends ProjectForm, SortableModel {
   id: string;
   isFavourite: boolean;
+  isAchive: boolean;
   view: ProjectView;
   todoSections: string[];
 }

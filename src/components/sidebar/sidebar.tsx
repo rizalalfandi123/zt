@@ -10,6 +10,7 @@ import { InboxIcon, CalendarIcon, CalendarUpIcon, CategoryIcon, ChevronDownIcon,
 import { useVerticalCollapsibleAnimation, useAppSelector } from "@/hooks";
 import { type Project } from "@/schema-and-types";
 import { cn } from "@/lib";
+import { getActiveProjects } from "@/selector";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -23,7 +24,7 @@ type Menu = {
 export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
   const location = useLocation();
 
-  const projects = useAppSelector((store) => store.projects.value);
+  const projects = useAppSelector(getActiveProjects);
 
   const { measureRef, setIsOpen, styles, isOpen } = useVerticalCollapsibleAnimation();
 
@@ -132,16 +133,10 @@ const InnerMapMenu = React.memo<{ menus: Menu[]; locationPath: string }>(({ menu
   );
 });
 
-const InnerMapProjectItem = React.memo<{ projects: Record<string, Project> }>(({ projects }) => {
-  const sortProjects: Project[] = React.useMemo(() => {
-    const projectsArray = Object.entries(projects).map(([_key, project]) => project);
-
-    return projectsArray.sort((a, b) => a.index - b.index);
-  }, [projects]);
-
+const InnerMapProjectItem = React.memo<{ projects: Project[] }>(({ projects }) => {
   return (
     <>
-      {sortProjects.map((project, index) => {
+      {projects.map((project, index) => {
         return <ProjectItem project={project} key={index} />;
       })}
     </>
