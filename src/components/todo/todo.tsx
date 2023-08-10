@@ -2,6 +2,8 @@ import React from "react";
 import Button from "@/components/ui/button";
 import Editor from "@/components/editor";
 import Checkbox from "@/components/ui/checkbox";
+import Dropdown from "@/components/ui/dropdown-menu";
+import TodoOptions from "./todo-options";
 
 import { Draggable, type DraggableProps } from "@hello-pangea/dnd";
 import { DotsIcon } from "@/components/icons";
@@ -10,20 +12,19 @@ import { Todo as ITodo } from "@/schema-and-types";
 import { uiActions } from "@/stores/ui.slice";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { cn } from "@/lib";
+import { todoBoardActions } from "@/stores/todo-column-store";
 
 export interface TodoProps extends React.ComponentProps<"div"> {
   todo: ITodo;
-  boardId: string;
+  sectionId: string;
 }
 
 interface DraggableTodoProps extends Omit<DraggableProps, "children">, TodoProps {}
 
 const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
-  const { todo, boardId, ...draggableProps } = props;
+  const { todo, sectionId, ...draggableProps } = props;
 
   const [isHover, setIsHover] = React.useState<boolean>(false);
-
-  const [isOpen] = React.useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -33,7 +34,7 @@ const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
     return (
       <Editor
         initialConfig={{ namespace: "todo-title", editorState: todo.title, editable: false }}
-        editableProps={{ className: "border-none line-clamp-2" }}
+        editableProps={{ className: "border-none line-clamp-1 my-[2px]" }}
         placeholder={null}
       />
     );
@@ -43,38 +44,28 @@ const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
     return (
       <Editor
         initialConfig={{ namespace: "todo-description", editorState: todo.description, editable: false }}
-        editableProps={{ className: "border-none line-clamp-3" }}
+        editableProps={{ className: "border-none line-clamp-2" }}
         placeholder={null}
       />
     );
   }, [todo.description]);
 
-  const isEdit = useAppSelector((store) => store.ui.value.openedTodoForm === todo.id);
+  const isEdit = useAppSelector((store) => store.ui.value.openedForm === todo.id);
 
   if (isEdit) {
-    const handleSaveEditedTodo: TodoFormProps["onSave"] = () => {
-      // const todoContext: Partial<ITodo> = {
-      //   ...formResult,
-      //   id: todo.id,
-      // };
-      // dispatch(todoActions.updateTodo({ todo: todoContext, boardId }));
-      // dispatch(uiActions.setOpenedTodoForm(null));
+    const handleSaveEditedTodo: TodoFormProps["onSave"] = (data) => {
+      dispatch(todoBoardActions.updateTodo({ id: todo.id, sectionId, ...data }));
+      dispatch(uiActions.setOpenedForm(null));
     };
 
     return (
       <TodoForm
         initialValue={todo}
-        onClose={() => dispatch(uiActions.setOpenedTodoForm(null))}
+        onClose={() => dispatch(uiActions.setOpenedForm(null))}
         onSave={handleSaveEditedTodo}
       />
     );
   }
-
-  React.useEffect(() => {
-    if (isOpen === false) {
-      setIsHover(false);
-    }
-  }, [isOpen]);
 
   return (
     <Draggable {...draggableProps} disableInteractiveElementBlocking>
@@ -95,13 +86,17 @@ const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
             ref={dragProvided.innerRef}
             {...dragProvided.draggableProps}
           >
-            <Button
-              size="icon"
-              variant="ghost"
-              className={cn(["absolute right-1 top-1 invisible z-[5]", { visible: isHover }])}
-            >
-              <DotsIcon />
-            </Button>
+            <TodoOptions sectionId={sectionId} todoId={todo.id}>
+              <Dropdown.Trigger asChild>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className={cn(["absolute right-1 top-1 invisible z-[5] bg-background", { visible: isHover }])}
+                >
+                  <DotsIcon />
+                </Button>
+              </Dropdown.Trigger>
+            </TodoOptions>
 
             <div className="flex flex-col" {...dragProvided.dragHandleProps}>
               <div className="flex gap-3 items-center">
@@ -110,6 +105,7 @@ const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
                 {todo.description ? (
                   <div className="flex flex-col w-[calc(100%-44px)]">
                     {title}
+                    <hr className="my-2" />
                     {description}
                   </div>
                 ) : (

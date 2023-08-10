@@ -5,16 +5,21 @@ import FormProject from "@/pages/project/form-project";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
-import { projectFormSchema, type ProjectForm } from "@/schema-and-types";
+import { projectFormSchema, type ProjectForm, Project } from "@/schema-and-types";
 import { useAppDispatch } from "@/hooks";
 import { projectActions } from "@/stores/project-store";
+import { CreateProjectPayload } from "@/stores/project-store/create-project.reducer";
 
 const ModalCreateProject = () => {
   const navigate = useNavigate();
 
+  const location = useLocation();
+
   const dispatch = useAppDispatch();
+
+  console.log({ s: location.state });
 
   const form = useForm<ProjectForm>({
     resolver: zodResolver(projectFormSchema),
@@ -27,7 +32,13 @@ const ModalCreateProject = () => {
   const onSubmit = (data: ProjectForm) => {
     const id = uuid();
 
-    dispatch(projectActions.createProject({ ...data, isFavourite: false, view: "BOARD", todoSections: [], id }));
+    const project: CreateProjectPayload = { ...data, isFavourite: false, view: "BOARD", todoSections: [], id };
+
+    if (location.state.targetIndex) {
+      project.targetIndex = location.state.targetIndex;
+    }
+
+    dispatch(projectActions.createProject(project));
 
     navigate(-1);
   };

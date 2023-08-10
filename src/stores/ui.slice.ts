@@ -3,19 +3,19 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 type UiState = {
   value: {
     isUserDraggingTodo: boolean;
-    openedTodoForm: string | null;
+    openedForm: string | null;
   };
 };
 
 type UiReducers = {
   toggleIsDraggingTodo: (state: UiState, payload: PayloadAction<boolean>) => void;
-  setOpenedTodoForm: (state: UiState, payload: PayloadAction<UiState["value"]["openedTodoForm"]>) => void;
+  setOpenedForm: (state: UiState, payload: PayloadAction<UiState["value"]["openedForm"]>) => void;
 };
 
 const initialState: UiState = {
   value: {
     isUserDraggingTodo: false,
-    openedTodoForm: null,
+    openedForm: null,
   },
 };
 
@@ -23,8 +23,8 @@ const toggleIsDraggingTodo: UiReducers["toggleIsDraggingTodo"] = (state, { paylo
   state.value.isUserDraggingTodo = payload;
 };
 
-const setOpenedTodoForm: UiReducers["setOpenedTodoForm"] = (state, { payload }) => {
-  state.value.openedTodoForm = payload;
+const setOpenedForm: UiReducers["setOpenedForm"] = (state, { payload }) => {
+  state.value.openedForm = payload;
 };
 
 export const uiSlice = createSlice<UiState, UiReducers>({
@@ -32,7 +32,7 @@ export const uiSlice = createSlice<UiState, UiReducers>({
   initialState,
   reducers: {
     toggleIsDraggingTodo,
-    setOpenedTodoForm,
+    setOpenedForm,
   },
 });
 
