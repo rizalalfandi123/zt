@@ -39,7 +39,7 @@ const FormProject: React.FunctionComponent<{ form: UseFormReturn<ProjectForm> }>
         })}
       </SelectField>
 
-      <Radio.RadioGroup defaultValue="comfortable">
+      <Radio.RadioGroup>
         <FormLabel htmlFor="ddj">View</FormLabel>
         <div className="flex items-center space-x-2" id="ddj">
           <Radio.RadioGroupItem value="comfortable" id="r2" />

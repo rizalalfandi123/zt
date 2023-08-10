@@ -1,15 +1,16 @@
 import { z } from "zod";
 import { projectFormSchema, todoSectionFormSchema } from "./schema";
 import { type Icon } from "@/components/icons";
+import { RouteProps } from "react-router-dom";
 
 export interface OptionItem {
   label: string;
   icon: Icon;
-  onClick: () => void
+  onClick: () => void;
 }
 
 export interface SortableModel {
-  index: number
+  index: number;
 }
 export interface TodoColumn extends TodoSection {
   todo: Todo[];
@@ -28,12 +29,9 @@ export type ScreenMode = "dark" | "light";
 
 export type AppTheme = Record<ScreenMode, string>;
 
-// FORM
 export type ProjectForm = z.infer<typeof projectFormSchema>;
 
 export type TodoSectionForm = z.infer<typeof todoSectionFormSchema>;
-
-// MODEL
 export interface Todo {
   id: string;
   title: string;
@@ -55,3 +53,7 @@ export interface TodoSection extends TodoSectionForm {
   id: string;
   projectId: string;
 }
+
+export type AppRoute = {
+  isModal: boolean;
+} & RouteProps;

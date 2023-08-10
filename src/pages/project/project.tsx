@@ -12,7 +12,7 @@ import { todoBoardActions } from "@/stores/todo-column-store";
 import { Todo, TodoBoard, TodoMap } from "@/schema-and-types";
 import { reorder } from "@/lib";
 
-const Project = () => {
+export const Project = () => {
   const dispatch = useAppDispatch();
 
   const projectId = useParams()["id"]!;
@@ -139,5 +139,3 @@ const Project = () => {
     </DragDropContext>
   );
 };
-
-export default Project;

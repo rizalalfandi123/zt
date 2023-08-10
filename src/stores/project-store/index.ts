@@ -6,6 +6,8 @@ import { type UpdateProject, updateProject } from "./update-project.reducer";
 import { type DeleteProject, deleteProject } from "./delete-project.reducer";
 import { type AddNewTodoSection, addNewTodoSection } from "./add-new-todo-section.reducer";
 import { type DeleteTodoSection, deleteTodoSection } from "./delete-todo-section.reducer";
+import { type  AddProjectToFavourite, addProjectToFavourite } from "./add-project-to-favourite.reducer";
+import { type RemoveProjectFromFavourite, removeProjectFromFavourite } from "./remove-project-from-favourite.reducer";
 
 export interface ProjectState {
   value: Record<string, Project>;
@@ -16,7 +18,9 @@ export type ProjectActions = {
   updateProject: UpdateProject;
   deleteProject: DeleteProject;
   addNewTodoSection: AddNewTodoSection;
-  deleteTodoSection: DeleteTodoSection
+  deleteTodoSection: DeleteTodoSection;
+  addProjectToFavourite: AddProjectToFavourite;
+  removeProjectFromFavourite: RemoveProjectFromFavourite
 };
 
 const initialState: ProjectState = {
@@ -31,7 +35,9 @@ export const projectSlice = createSlice<ProjectState, ProjectActions>({
     updateProject,
     deleteProject,
     addNewTodoSection,
-    deleteTodoSection
+    deleteTodoSection,
+    addProjectToFavourite,
+    removeProjectFromFavourite
   },
 });
 

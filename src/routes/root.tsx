@@ -1,6 +1,7 @@
-import { LoaderIcon } from "@/components/icons";
 import React from "react";
+import LazyLoadIndicator from "@/components/lazy-load-indicator";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { projectRoutes } from "./projects.route";
 
 const Inbox = React.lazy(() => import("@/pages/inbox"));
 const Today = React.lazy(() => import("@/pages/today"));
@@ -8,7 +9,6 @@ const Upcoming = React.lazy(() => import("@/pages/upcoming"));
 const FilterAndLabel = React.lazy(() => import("@/pages/filter-and-label"));
 const CreateProject = React.lazy(() => import("@/pages/project/create-project"));
 const UpdateProject = React.lazy(() => import("@/pages/project/update-project"));
-const Project = React.lazy(() => import("@/pages/project/project"));
 
 const Layout = React.lazy(() => import("@/components/layout"));
 const Sidebar = React.lazy(() => import("@/components/sidebar"));
@@ -24,7 +24,7 @@ export const AppRoutes = () => {
         <Route
           path="/"
           element={
-            <React.Suspense fallback={<Indicator />}>
+            <React.Suspense fallback={<LazyLoadIndicator />}>
               <Layout header={null} sidebar={<Sidebar />} />
             </React.Suspense>
           }
@@ -32,7 +32,7 @@ export const AppRoutes = () => {
           <Route
             path="/today"
             element={
-              <React.Suspense fallback={<Indicator />}>
+              <React.Suspense fallback={<LazyLoadIndicator />}>
                 <Today />
               </React.Suspense>
             }
@@ -40,7 +40,7 @@ export const AppRoutes = () => {
           <Route
             path="/upcoming"
             element={
-              <React.Suspense fallback={<Indicator />}>
+              <React.Suspense fallback={<LazyLoadIndicator />}>
                 <Upcoming />
               </React.Suspense>
             }
@@ -48,7 +48,7 @@ export const AppRoutes = () => {
           <Route
             path="/inbox"
             element={
-              <React.Suspense fallback={<Indicator />}>
+              <React.Suspense fallback={<LazyLoadIndicator />}>
                 <Inbox />
               </React.Suspense>
             }
@@ -56,19 +56,15 @@ export const AppRoutes = () => {
           <Route
             path="/filter-and-label"
             element={
-              <React.Suspense fallback={<Indicator />}>
+              <React.Suspense fallback={<LazyLoadIndicator />}>
                 <FilterAndLabel />
               </React.Suspense>
             }
           />
-          <Route
-            path="/project/:id"
-            element={
-              <React.Suspense fallback={<Indicator />}>
-                <Project />
-              </React.Suspense>
-            }
-          />
+          
+          {projectRoutes.map((route, index) => {
+            return <Route key={index} {...route} />
+          })}
         </Route>
       </Routes>
 
@@ -77,7 +73,7 @@ export const AppRoutes = () => {
           <Route
             path="/update-project/:id"
             element={
-              <React.Suspense fallback={<Indicator />}>
+              <React.Suspense fallback={<LazyLoadIndicator />}>
                 <UpdateProject />
               </React.Suspense>
             }
@@ -85,7 +81,7 @@ export const AppRoutes = () => {
           <Route
             path="/create-project"
             element={
-              <React.Suspense fallback={<Indicator />}>
+              <React.Suspense fallback={<LazyLoadIndicator />}>
                 <CreateProject />
               </React.Suspense>
             }
@@ -96,11 +92,3 @@ export const AppRoutes = () => {
   );
 };
 
-const Indicator = () => {
-  return (
-    <div className="p-2 rounded-lg flex gap-2 fixed bottom-2 right-2 border border-border">
-      <p>Loading</p>
-      <LoaderIcon className="w-6 h-6 z-50 text-red-500 animate-spin" />
-    </div>
-  );
-};
