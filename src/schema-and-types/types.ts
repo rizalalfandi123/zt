@@ -1,19 +1,21 @@
 import { z } from "zod";
 import { projectFormSchema, todoSectionFormSchema } from "./schema";
+import { type Icon } from "@/components/icons";
 
-export interface BasicModelWithRef {
-  _id: string;
-  _rev: string;
+export interface OptionItem {
+  label: string;
+  icon: Icon;
+  onClick: () => void
 }
 
+export interface SortableModel {
+  index: number
+}
 export interface TodoColumn extends TodoSection {
   todo: Todo[];
 }
 
-export type TodoMap = Record<
-  string,
-  TodoColumn
->;
+export type TodoMap = Record<string, TodoColumn>;
 
 export interface TodoBoard {
   columns: TodoMap;
@@ -35,17 +37,17 @@ export type TodoSectionForm = z.infer<typeof todoSectionFormSchema>;
 export interface Todo {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   isChecked: boolean;
   projectId: string;
   sectionId: string;
 }
 
-export interface Project extends ProjectForm {
+export interface Project extends ProjectForm, SortableModel {
   id: string;
   isFavourite: boolean;
   view: ProjectView;
-  todoSections: string[]
+  todoSections: string[];
 }
 
 export interface TodoSection extends TodoSectionForm {

@@ -1,10 +1,10 @@
-import { useRef } from "react";
-import type { EditorState, LexicalEditor } from "lexical";
-
+import React from "react";
 import Button from "@/components/ui/button";
 import Editor from "@/components/editor";
+
+import type { EditorState, LexicalEditor } from "lexical";
 import { XIcon, SendIcon } from "@/components/icons";
-import {cn } from "@/lib";
+import { cn } from "@/lib";
 import { Todo } from "@/schema-and-types";
 import { useAppSelector } from "@/hooks";
 
@@ -28,27 +28,39 @@ export interface TodoFormProps {
 export const TodoForm: React.FunctionComponent<TodoFormProps> = (props) => {
   const { initialValue, onSave, onClose, containerClassname } = props;
 
-  const titleEditorRef = useRef<EditorRef | null>(null);
+  const titleEditorRef = React.useRef<EditorRef | null>(null);
 
-  const descriptionEditorRef = useRef<EditorRef | null>(null);
+  const descriptionEditorRef = React.useRef<EditorRef | null>(null);
 
   const isUserDraggingTodo = useAppSelector((store) => store.ui.value.isUserDraggingTodo);
 
   const handleSave = () => {
-    const title = JSON.stringify(titleEditorRef.current?.editorState.toJSON());
+    if (titleEditorRef.current) {
+      const isEmptyTitle = titleEditorRef.current.editor._rootElement?.textContent === "";
 
-    const description = descriptionEditorRef.current
-      ? JSON.stringify(descriptionEditorRef.current.editorState.toJSON())
-      : initialValue?.description
-      ? initialValue.description
-      : "";
+      const isEmptysDesription = descriptionEditorRef.current?.editor._rootElement?.textContent === "";
+      if (isEmptyTitle) {
+        titleEditorRef.current.editor.focus();
+        return;
+      }
 
-    const formResult: TodoFormResult = {
-      title,
-      description,
-    };
+      if (!onSave) return;
 
-    onSave?.(formResult, titleEditorRef.current, descriptionEditorRef.current);
+      const title = JSON.stringify(titleEditorRef.current.editorState.toJSON());
+
+      const description = descriptionEditorRef.current
+        ? JSON.stringify(descriptionEditorRef.current.editorState.toJSON())
+        : initialValue?.description
+        ? initialValue.description
+        : undefined;
+
+      const formResult: TodoFormResult = {
+        title,
+        description: isEmptysDesription ? undefined : description,
+      };
+
+      onSave(formResult, titleEditorRef.current, descriptionEditorRef.current);
+    }
   };
 
   return (
@@ -56,7 +68,7 @@ export const TodoForm: React.FunctionComponent<TodoFormProps> = (props) => {
       className={cn([
         "p-2 border flex flex-col border-slate-700 bg-background transition-all duration-300 rounded-lg w-full",
         { "opacity-0": isUserDraggingTodo },
-        containerClassname
+        containerClassname,
       ])}
     >
       <Editor

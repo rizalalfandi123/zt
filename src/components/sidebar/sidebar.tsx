@@ -6,7 +6,7 @@ import ProjectItem from "@/components/sidebar/project-item";
 import { animated } from "@react-spring/web";
 
 import { NavLink, useLocation } from "react-router-dom";
-import { InboxIcon, CalendarIcon, CalendarUpIcon, CategoryIcon, ChevronDown, PlusIcon } from "@/components/icons";
+import { InboxIcon, CalendarIcon, CalendarUpIcon, CategoryIcon, ChevronDownIcon, PlusIcon } from "@/components/icons";
 import { useVerticalCollapsibleAnimation, useAppSelector } from "@/hooks";
 import { type Project } from "@/schema-and-types";
 import { cn } from "@/lib";
@@ -78,7 +78,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
                     <button onClick={() => setIsOpen((prev) => !prev)}>
-                      <ChevronDown
+                      <ChevronDownIcon
                         className={cn([
                           "transition-all duration-500 rotate-0",
                           {
@@ -133,10 +133,16 @@ const InnerMapMenu = React.memo<{ menus: Menu[]; locationPath: string }>(({ menu
 });
 
 const InnerMapProjectItem = React.memo<{ projects: Record<string, Project> }>(({ projects }) => {
+  const sortProjects: Project[] = React.useMemo(() => {
+    const projectsArray = Object.entries(projects).map(([_key, project]) => project);
+
+    return projectsArray.sort((a, b) => a.index - b.index);
+  }, [projects]);
+
   return (
     <>
-      {Object.keys(projects).map((key, index) => {
-        return <ProjectItem project={projects[key]} key={index} />;
+      {sortProjects.map((project, index) => {
+        return <ProjectItem project={project} key={index} />;
       })}
     </>
   );

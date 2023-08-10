@@ -2,7 +2,6 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 
 import { appSettingsReducer } from "./app-settings.slice";
-import { todoReducer } from "./todo.slice";
 import { uiReducer } from "./ui.slice";
 import { projectReducers } from "@/stores/project-store";
 import { todoBoardReducers } from "@/stores/todo-column-store";
@@ -12,7 +11,6 @@ import { localForageStorage } from "@/lib";
 const allReducers = combineReducers({
   appSettings: appSettingsReducer,
   ui: uiReducer,
-  todo: todoReducer,
   projects: projectReducers,
   todoBoard: todoBoardReducers
 });

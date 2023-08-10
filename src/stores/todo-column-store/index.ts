@@ -6,6 +6,8 @@ import { type UpdateTodoBoard, updateTodoBoard } from "./update-todo-board.reduc
 import { type DeleteTodoBoard, deleteTodoBoard } from "./delete-todo-board.reducer";
 import { type CreateTodo, createTodo } from "./create-todo.reducer";
 import { type SetTodoBoard, setTodoBoard } from "./set-todo-board.reducer";
+import { type DeleteTodo, deleteTodo } from "./delete-todo.reducer";
+import { type UpdateTodo, updateTodo } from "./update-todo.reducer";
 
 export interface TodoBoardState {
   value: TodoBoard;
@@ -16,7 +18,9 @@ export type TodoBoardActions = {
   updateTodoBoard: UpdateTodoBoard;
   deleteTodoBoard: DeleteTodoBoard;
   createTodo: CreateTodo;
-  setTodoBoard: SetTodoBoard
+  setTodoBoard: SetTodoBoard;
+  deleteTodo: DeleteTodo;
+  updateTodo: UpdateTodo;
 };
 
 const initialState: TodoBoardState = {
@@ -31,7 +35,9 @@ export const todoBoardSlice = createSlice<TodoBoardState, TodoBoardActions>({
     updateTodoBoard,
     deleteTodoBoard,
     createTodo,
-    setTodoBoard
+    setTodoBoard,
+    deleteTodo,
+    updateTodo,
   },
 });
 

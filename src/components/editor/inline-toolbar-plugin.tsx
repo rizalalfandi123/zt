@@ -3,7 +3,7 @@ import React from "react";
 import { FORMAT_TEXT_COMMAND, TextFormatType } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
-import { IconBold, IconItalic, IconUnderline, IconStrikethrough, type Icon } from "@/components/icons";
+import { BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, type Icon } from "@/components/icons";
 import Button, { ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib";
 
@@ -30,19 +30,19 @@ const Component: React.ForwardRefRenderFunction<HTMLDivElement, ToolbarPluginPro
 
   const toolItems: ToolItem[] = [
     {
-      icon: IconBold,
+      icon: BoldIcon,
       onClick: formatText("bold"),
     },
     {
-      icon: IconItalic,
+      icon: ItalicIcon,
       onClick: formatText("italic"),
     },
     {
-      icon: IconUnderline,
+      icon: UnderlineIcon,
       onClick: formatText("underline"),
     },
     {
-      icon: IconStrikethrough,
+      icon: StrikethroughIcon,
       onClick: formatText("strikethrough"),
     },
   ];

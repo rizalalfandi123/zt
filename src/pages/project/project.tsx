@@ -1,9 +1,9 @@
 import Button from "@/components/ui/button";
+import TodoList from "@/components/todo-list";
 
 import { DragDropContext, Droppable, type DraggableLocation, type DragDropContextProps } from "@hello-pangea/dnd";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { TodoList } from "@/components/todo";
 import { AddNewTodoSection } from "@/components/todo-section/create-todo-section";
 import { PlusIcon } from "@/components/icons";
 import { uiActions } from "@/stores/ui.slice";
@@ -24,12 +24,12 @@ const Project = () => {
       return Object.assign(previousValue, { [currentValue]: store.todoBoard.value.columns[currentValue] });
     }, {});
 
-    const ordered: string[] = Object.keys(columns);
+    const ordered: string[] = store.todoBoard.value.ordered
 
     return { columns, ordered };
   });
 
-  const openedSectionForm = useAppSelector((store) => store.ui.value.openedTodoForm === `new-section-${projectId}`);
+  const openedSectionForm = useAppSelector((store) => store.ui.value.openedForm === `new-section-${projectId}`);
 
   const setBoard = (payload: TodoBoard) => dispatch(todoBoardActions.setTodoBoard(payload));
 
@@ -122,11 +122,11 @@ const Project = () => {
                 {provided.placeholder}
               </div>
 
-              <AddNewTodoSection onClose={() => dispatch(uiActions.setOpenedTodoForm(null))} open={openedSectionForm}>
+              <AddNewTodoSection onClose={() => dispatch(uiActions.setOpenedForm(null))} open={openedSectionForm}>
                 <Button
                   className="w-full flex gap-1"
                   variant="ghost"
-                  onClick={() => dispatch(uiActions.setOpenedTodoForm(`new-section-${projectId}`))}
+                  onClick={() => dispatch(uiActions.setOpenedForm(`new-section-${projectId}`))}
                 >
                   <PlusIcon />
                   Add New TodoSection

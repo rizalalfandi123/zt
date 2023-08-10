@@ -1,5 +1,4 @@
 import React from "react";
-import Dropdown from "@/components/ui/dropdown-menu";
 import Todo from "@/components/todo";
 import Button from "@/components/ui/button";
 import UpdateTodoSection from "@/components/todo-section/update-todo-section";
@@ -9,13 +8,12 @@ import { useParams } from "react-router-dom";
 import { $getRoot } from "lexical";
 import { v4 as uuid } from "uuid";
 import { type Todo as TTodo } from "@/schema-and-types";
-import {  useAppDispatch, useAppSelector } from "@/hooks";
-import {  delay, cn } from "@/lib";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { cn } from "@/lib";
 import { TodoForm, TodoFormProps } from "@/components/todo/todo-form";
 import { uiActions } from "@/stores/ui.slice";
-import { DotsIcon } from "@/components/icons";
 import { todoBoardActions } from "@/stores/todo-column-store";
-import { projectActions } from "@/stores/project-store";
+import TodoListOptions from "./todo-list-options";
 
 interface DraggableTodoListProps extends Omit<DraggableProps, "children"> {
   title: string;
@@ -31,31 +29,30 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
 
   const [isHover, setIsHover] = React.useState<boolean>(false);
 
-  const [isShowOption, setIsShowOpen] = React.useState<boolean>(false);
-
   const isUserDraggingTodo = useAppSelector((store) => store.ui.value.isUserDraggingTodo);
 
-  const openedNewTodoForm = useAppSelector((store) => store.ui.value.openedTodoForm === draggableProps.draggableId);
+  const openedNewTodoForm = useAppSelector((store) => store.ui.value.openedForm === draggableProps.draggableId);
 
-  const openedSectionForm = useAppSelector(
-    (store) => store.ui.value.openedTodoForm === `new-section-${draggableProps.draggableId}`,
+  const isOpenEditSectionForm = useAppSelector(
+    (store) => store.ui.value.openedForm === `edit-section-${draggableProps.draggableId}`,
   );
 
   const handleClickNewTodo = () => {
-    dispatch(uiActions.setOpenedTodoForm(draggableProps.draggableId));
+    dispatch(uiActions.setOpenedForm(draggableProps.draggableId));
   };
 
   const handleSaveTodo: TodoFormProps["onSave"] = async (formResult, titleEditorRef, descriptionEditorRef) => {
     const id = uuid();
-    dispatch(
-      todoBoardActions.createTodo({
-        ...formResult,
-        id,
-        isChecked: false,
-        projectId,
-        sectionId: draggableProps.draggableId,
-      }),
-    );
+
+    const newTodo: TTodo = {
+      ...formResult,
+      id,
+      isChecked: false,
+      projectId,
+      sectionId: draggableProps.draggableId,
+    };
+
+    dispatch(todoBoardActions.createTodo(newTodo));
 
     if (descriptionEditorRef) {
       descriptionEditorRef.editor.update(() => {
@@ -68,11 +65,6 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
     });
 
     titleEditorRef?.editor.focus();
-  };
-
-  const handleDeleteTodoSection = async () => {
-    dispatch(todoBoardActions.deleteTodoBoard(draggableProps.draggableId));
-    dispatch(projectActions.deleteTodoSection({ projectId, sectionId: draggableProps.draggableId }));
   };
 
   return (
@@ -92,8 +84,8 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
                       ])}
                     >
                       <UpdateTodoSection
-                        open={openedSectionForm}
-                        onClose={() => dispatch(uiActions.setOpenedTodoForm(null))}
+                        open={isOpenEditSectionForm}
+                        onClose={() => dispatch(uiActions.setOpenedForm(null))}
                         sectionId={draggableProps.draggableId}
                       >
                         <h6
@@ -110,7 +102,7 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
                         return (
                           <Todo
                             index={index}
-                            boardId={draggableProps.draggableId}
+                            sectionId={draggableProps.draggableId}
                             draggableId={todo.id}
                             todo={todo}
                             key={todo.id}
@@ -118,33 +110,11 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
                         );
                       })}
 
-                      <Dropdown.Menu open={isShowOption} onOpenChange={(newValue) => setIsShowOpen(newValue)}>
-                        {!openedSectionForm && (
-                          <Dropdown.Trigger asChild>
-                            <Button size="icon" variant="ghost" className="absolute right-1 top-1 z-[5]">
-                              <DotsIcon />
-                            </Button>
-                          </Dropdown.Trigger>
-                        )}
-
-                        <Dropdown.Content>
-                          <Dropdown.Item onClick={handleDeleteTodoSection}>Delete</Dropdown.Item>
-                          <Dropdown.Separator />
-                          <Dropdown.Item
-                            onClick={async () => {
-                              setIsShowOpen(false);
-                              await delay(150);
-                              dispatch(uiActions.setOpenedTodoForm(`new-section-${draggableProps.draggableId}`));
-                            }}
-                          >
-                            Edit
-                          </Dropdown.Item>
-                        </Dropdown.Content>
-                      </Dropdown.Menu>
+                      <TodoListOptions todoSectionId={draggableProps.draggableId} />
 
                       {openedNewTodoForm ? (
                         <TodoForm
-                          onClose={() => dispatch(uiActions.setOpenedTodoForm(null))}
+                          onClose={() => dispatch(uiActions.setOpenedForm(null))}
                           onSave={handleSaveTodo}
                           containerClassname={cn({ "mt-4": todos.length > 0 })}
                         />

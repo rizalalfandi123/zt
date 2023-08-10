@@ -5,14 +5,20 @@ import Tooltip from "@/components/ui/tooltip";
 
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib";
-import { Project } from "@/schema-and-types";
-import { DotsIcon, PointIcon } from "@/components/icons";
+import type { OptionItem, Project } from "@/schema-and-types";
+import { DotsIcon, EditIcon, PointIcon, TrashIcon, ArrowDownIcon, ArrowUpIcon } from "@/components/icons";
 import { projectIndicator } from "@/constants";
 import { projectActions } from "@/stores/project-store";
 import { useAppDispatch } from "@/hooks";
 
 interface ProjectItemProps {
   project: Project;
+}
+
+type ProjectOption = OptionItem | React.ReactNode;
+
+function isOptionItem(item: ProjectOption): item is OptionItem {
+  return (item as OptionItem).label !== undefined;
 }
 
 const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
@@ -24,7 +30,7 @@ const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
 
   const navigate = useNavigate();
 
-  const [showOption, setShowOption] = React.useState<boolean>(false);
+  const [showOptionBitton, setShowOptionButton] = React.useState<boolean>(false);
 
   const handleDeleteProject = () => {
     dispatch(projectActions.deleteProject(project.id));
@@ -34,12 +40,29 @@ const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
     navigate(`/update-project/${project.id}`, { state: { backgroundLocation: location } });
   };
 
+  const handleAddProjectInSpecificIndex = (targetIndex: number) => () => {
+    navigate("/create-project", { state: { backgroundLocation: location, targetIndex } });
+  };
+
+  const projectOptions: ProjectOption[] = React.useMemo(() => {
+    const options: ProjectOption[] = [
+      { icon: ArrowUpIcon, label: "Add Project Above", onClick: handleAddProjectInSpecificIndex(project.index) },
+      { icon: ArrowDownIcon, label: "Add Project Below", onClick: handleAddProjectInSpecificIndex(project.index + 1) },
+      <hr />,
+      { icon: EditIcon, label: "Edit", onClick: handleUpdateProject },
+      <hr />,
+      { icon: TrashIcon, label: "Delete", onClick: handleDeleteProject },
+    ];
+
+    return options;
+  }, []);
+
   return (
     <Button
       variant={location.pathname === `/projects/${project.id}` ? "secondary" : "ghost"}
       className="w-full justify-start block"
-      onMouseOver={() => setShowOption(true)}
-      onMouseLeave={() => setShowOption(false)}
+      onMouseOver={() => setShowOptionButton(true)}
+      onMouseLeave={() => setShowOptionButton(false)}
       asChild
     >
       <div className="flex items-center justify-between">
@@ -57,7 +80,7 @@ const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
             <Tooltip.Root>
               <Dropdown.Trigger asChild>
                 <Tooltip.Trigger asChild>
-                  <Button variant="ghost" size="icon" className={cn(["invisible", { visible: showOption }])}>
+                  <Button variant="ghost" size="icon" className={cn(["invisible", { visible: showOptionBitton }])}>
                     <DotsIcon />
                   </Button>
                 </Tooltip.Trigger>
@@ -67,10 +90,19 @@ const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
               </Tooltip.Content>
             </Tooltip.Root>
           </Tooltip.Provider>
-          <Dropdown.Content>
-            <Dropdown.Item onClick={handleDeleteProject}>Delete</Dropdown.Item>
-            <Dropdown.Separator />
-            <Dropdown.Item onClick={handleUpdateProject}>Edit</Dropdown.Item>
+          <Dropdown.Content className="w-56 space-y-1">
+            {projectOptions.map((option, index) => {
+              if (!isOptionItem(option)) {
+                return <React.Fragment key={index}>{option}</React.Fragment>;
+              }
+
+              return (
+                <Dropdown.Item onClick={option.onClick} key={index}>
+                  <option.icon className="mr-2 w-5 h-5" />
+                  {option.label}
+                </Dropdown.Item>
+              );
+            })}
           </Dropdown.Content>
         </Dropdown.Menu>
       </div>
