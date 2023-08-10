@@ -6,12 +6,17 @@ import Tooltip from "@/components/ui/tooltip";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib";
 import type { OptionItem, Project } from "@/schema-and-types";
-import { DotsIcon, EditIcon, PointIcon, TrashIcon, ArrowDownIcon, ArrowUpIcon, HeartIcon, ArchiveIcon } from "@/components/icons";
+import {
+  DotsIcon,
+  PointIcon,
+  HeartOffIcon,
+  EditIcon,
+} from "@/components/icons";
 import { projectIndicator } from "@/constants";
 import { projectActions } from "@/stores/project-store";
 import { useAppDispatch } from "@/hooks";
 
-interface ProjectItemProps {
+interface FavouriteProjectItemProps {
   project: Project;
 }
 
@@ -21,43 +26,29 @@ function isOptionItem(item: ProjectOption): item is OptionItem {
   return (item as OptionItem).label !== undefined;
 }
 
-const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
+const FavouriteProjectItem: React.FunctionComponent<FavouriteProjectItemProps> = (props) => {
   const { project } = props;
 
   const location = useLocation();
 
   const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [showOptionBitton, setShowOptionButton] = React.useState<boolean>(false);
 
-  const handleDeleteProject = () => {
-    dispatch(projectActions.deleteProject(project.id));
+  const removeProjectFromFavourite = () => {
+    dispatch(projectActions.removeProjectFromFavourite(project.id));
   };
 
   const handleUpdateProject = () => {
     navigate(`/update-project/${project.id}`, { state: { backgroundLocation: location } });
   };
 
-  const handleAddProjectInSpecificIndex = (targetIndex: number) => () => {
-    navigate("/create-project", { state: { backgroundLocation: location, targetIndex } });
-  };
-
-  const handleAddToFavourite = () => {
-    dispatch(projectActions.addProjectToFavourite(project.id))
-  }
-
   const projectOptions: ProjectOption[] = React.useMemo(() => {
     const options: ProjectOption[] = [
-      { icon: ArrowUpIcon, label: "Add Project Above", onClick: handleAddProjectInSpecificIndex(project.index) },
-      { icon: ArrowDownIcon, label: "Add Project Below", onClick: handleAddProjectInSpecificIndex(project.index + 1) },
-      <hr />,
+      { icon: HeartOffIcon, label: "Remove from Favourite", onClick: removeProjectFromFavourite },
       { icon: EditIcon, label: "Edit", onClick: handleUpdateProject },
-      { icon: HeartIcon, label: "Add to Favorite", onClick: handleAddToFavourite },
-      <hr />,
-      { icon: ArchiveIcon, label: "Archive", onClick: handleDeleteProject },
-      { icon: TrashIcon, label: "Delete", onClick: handleDeleteProject },
     ];
 
     return options;
@@ -116,4 +107,4 @@ const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
   );
 };
 
-export default ProjectItem;
+export default FavouriteProjectItem;

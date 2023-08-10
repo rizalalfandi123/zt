@@ -10,7 +10,7 @@ import { v4 as uuid } from "uuid";
 import { projectFormSchema, type ProjectForm } from "@/schema-and-types";
 import { useAppDispatch } from "@/hooks";
 import { projectActions } from "@/stores/project-store";
-import { CreateProjectPayload } from "@/stores/project-store/create-project.reducer";
+import { type CreateProjectPayload } from "@/stores/project-store/create-project.reducer";
 
 const ModalCreateProject = () => {
   const navigate = useNavigate();

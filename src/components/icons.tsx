@@ -418,3 +418,86 @@ export const ArrowDownIcon: Icon = ({ className, ...iconProps }) => {
     </svg>
   );
 };
+
+export const HeartIcon: Icon = ({ className, ...iconProps }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(["h-6 w-6", className])}
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...iconProps}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
+    </svg>
+  );
+};
+
+export const HeartOffIcon: Icon = ({ className, ...iconProps }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(["h-6 w-6", className])}
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...iconProps}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M3 3l18 18"></path>
+      <path d="M19.5 12.572l-1.5 1.428m-2 2l-4 4l-7.5 -7.428a5 5 0 0 1 -1.288 -5.068a4.976 4.976 0 0 1 1.788 -2.504m3 -1c1.56 0 3.05 .727 4 2a5 5 0 1 1 7.5 6.572"></path>
+    </svg>
+  );
+};
+
+export const PointFillIcon: Icon = ({ className, ...iconProps }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(["h-6 w-6", className])}
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...iconProps}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path
+        d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z"
+        stroke-width="0"
+        fill="currentColor"
+      ></path>
+    </svg>
+  );
+};
+
+export const ArchiveIcon: Icon = ({ className, ...iconProps }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(["h-6 w-6", className])}
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...iconProps}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
+      <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"></path>
+      <path d="M10 12l4 0"></path>
+    </svg>
+  );
+};

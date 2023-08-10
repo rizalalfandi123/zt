@@ -10,7 +10,8 @@ import { InboxIcon, CalendarIcon, CalendarUpIcon, CategoryIcon, ChevronDownIcon,
 import { useVerticalCollapsibleAnimation, useAppSelector } from "@/hooks";
 import { type Project } from "@/schema-and-types";
 import { cn } from "@/lib";
-import { getActiveProjects } from "@/selector";
+import { getActiveProjects, getFavouriteProject } from "@/selector";
+import FavouriteProjectItem from "./favourite-project-item";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -26,7 +27,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
 
   const projects = useAppSelector(getActiveProjects);
 
-  const { measureRef, setIsOpen, styles, isOpen } = useVerticalCollapsibleAnimation();
+  const favouriteProjects = useAppSelector(getFavouriteProject);
+
+  const {
+    measureRef: projectRef,
+    setIsOpen: setIsOpenProject,
+    styles: projectStyle,
+    isOpen: isOpenProject,
+  } = useVerticalCollapsibleAnimation();
+
+  const {
+    measureRef: favouriteProjectRef,
+    setIsOpen: setIsOpenFavouriteProject,
+    styles: favouriteProjectStyle,
+    isOpen: isOpenFavouriteProject,
+  } = useVerticalCollapsibleAnimation();
 
   const defaultMenu: Menu[] = React.useMemo(() => {
     const menus: Menu[] = [
@@ -50,6 +65,44 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
           <InnerMapMenu menus={defaultMenu} locationPath={location.pathname} />
         </div>
 
+        <div className={cn(["px-3 py-2", {'hidden': favouriteProjects.length < 1}])}>
+          <div
+            className={cn([
+              "px-4 py-1 w-full",
+              "rounded-md mb-2 flex font-semibold tracking-tight justify-between items-center",
+              "hover:bg-accent hover:text-accent-foreground",
+            ])}
+          >
+            <span>Favourites</span>
+
+            <Tooltip.Provider>
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <button onClick={() => setIsOpenFavouriteProject((prev) => !prev)}>
+                    <ChevronDownIcon
+                      className={cn([
+                        "transition-all duration-500 rotate-0",
+                        {
+                          "rotate-180": isOpenFavouriteProject,
+                        },
+                      ])}
+                    />
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  <p>Toggle list of favourite projects</p>
+                </Tooltip.Content>
+              </Tooltip.Root>
+            </Tooltip.Provider>
+          </div>
+
+          <animated.div className="space-y-1 overflow-y-hidden" style={favouriteProjectStyle}>
+            <div ref={favouriteProjectRef}>
+              <InnerMapFavouriteProjectItem projects={favouriteProjects} />
+            </div>
+          </animated.div>
+        </div>
+
         <div className="px-3 py-2">
           <div
             className={cn([
@@ -58,7 +111,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
               "hover:bg-accent hover:text-accent-foreground",
             ])}
           >
-            <NavLink to="/project" className="grow h-full">
+            <NavLink to="/projects" className="grow h-full">
               Projects
             </NavLink>
             <div className="flex gap-1">
@@ -78,13 +131,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
               <Tooltip.Provider>
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <button onClick={() => setIsOpen((prev) => !prev)}>
+                    <button onClick={() => setIsOpenProject((prev) => !prev)}>
                       <ChevronDownIcon
                         className={cn([
                           "transition-all duration-500 rotate-0",
                           {
-                            "rotate-180": isOpen,
+                            "rotate-180": isOpenProject,
                           },
+                          { hidden: projects.length < 1 },
                         ])}
                       />
                     </button>
@@ -97,8 +151,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
             </div>
           </div>
 
-          <animated.div className="space-y-1 overflow-y-hidden" style={styles}>
-            <div ref={measureRef}>
+          <animated.div className="space-y-1 overflow-y-hidden" style={projectStyle}>
+            <div ref={projectRef}>
               <InnerMapProjectItem projects={projects} />
             </div>
           </animated.div>
@@ -138,6 +192,16 @@ const InnerMapProjectItem = React.memo<{ projects: Project[] }>(({ projects }) =
     <>
       {projects.map((project, index) => {
         return <ProjectItem project={project} key={index} />;
+      })}
+    </>
+  );
+});
+
+const InnerMapFavouriteProjectItem = React.memo<{ projects: Project[] }>(({ projects }) => {
+  return (
+    <>
+      {projects.map((project, index) => {
+        return <FavouriteProjectItem project={project} key={index} />;
       })}
     </>
   );
