@@ -8,5 +8,5 @@ export type TodoSectionForm = z.infer<typeof todoSectionFormSchema>;
 
 export interface TodoSection extends TodoSectionForm {
   _id: string;
-  projectId: string
+  projectId: string;
 }

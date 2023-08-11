@@ -57,3 +57,5 @@ export interface TodoSection extends TodoSectionForm {
 export type AppRoute = {
   isModal: boolean;
 } & RouteProps;
+
+export type ProjectListType = "ARCHIVE" | "ACTIVE" | "FAVOURITE";

@@ -1,1 +1,1 @@
-export {LazyLoadIndicator as default} from "./lazy-load-indicator"
+export { LazyLoadIndicator as default } from "./lazy-load-indicator";

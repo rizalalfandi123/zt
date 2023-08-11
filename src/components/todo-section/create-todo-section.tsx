@@ -34,8 +34,8 @@ export const AddNewTodoSection: React.FunctionComponent<AddNewTodoSectionProps> 
     const id = uuid({});
     dispatch(todoBoardActions.createTodoBoard({ name, projectId, todo: [], id }));
     dispatch(projectActions.addNewTodoSection({ sectionId: id, projectId }));
-    form.reset()
-    onClose()
+    form.reset();
+    onClose();
   };
 
   return (

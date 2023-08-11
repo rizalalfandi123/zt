@@ -1,4 +1,3 @@
-
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as Radio from "@/components/ui/radio-group";
 
@@ -54,4 +53,4 @@ const FormProject: React.FunctionComponent<{ form: UseFormReturn<ProjectForm> }>
   );
 };
 
-export default FormProject
+export default FormProject;

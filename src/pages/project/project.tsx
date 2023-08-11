@@ -24,7 +24,7 @@ export const Project = () => {
       return Object.assign(previousValue, { [currentValue]: store.todoBoard.value.columns[currentValue] });
     }, {});
 
-    const ordered: string[] = store.todoBoard.value.ordered
+    const ordered: string[] = store.todoBoard.value.ordered;
 
     return { columns, ordered };
   });

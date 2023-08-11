@@ -8,7 +8,7 @@ export const InboxIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -28,7 +28,7 @@ export const CalendarIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -51,7 +51,7 @@ export const CalendarUpIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -75,7 +75,7 @@ export const CategoryIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -97,7 +97,7 @@ export const ChevronDownIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -116,7 +116,7 @@ export const ChevronUpIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -135,7 +135,7 @@ export const PlusIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -149,36 +149,13 @@ export const PlusIcon: Icon = ({ className, ...iconProps }) => {
   );
 };
 
-export const PointIcon: Icon = ({ className, ...iconProps }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn(["h-6 w-6", className])}
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      fill="none"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...iconProps}
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-      <path
-        d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z"
-        strokeWidth="0"
-        fill="currentColor"
-      ></path>
-    </svg>
-  );
-};
-
 export const DotsIcon: Icon = ({ className, ...iconProps }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -199,7 +176,7 @@ export const LoaderIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -218,7 +195,7 @@ export const XIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -238,7 +215,7 @@ export const SendIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -258,7 +235,7 @@ export const StrikethroughIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -278,7 +255,7 @@ export const UnderlineIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -298,7 +275,7 @@ export const ItalicIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -319,7 +296,7 @@ export const BoldIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -339,7 +316,7 @@ export const TrashIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -362,7 +339,7 @@ export const EditIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -383,7 +360,7 @@ export const ArrowUpIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -404,7 +381,7 @@ export const ArrowDownIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -425,7 +402,7 @@ export const HeartIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -444,7 +421,7 @@ export const HeartOffIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -458,13 +435,13 @@ export const HeartOffIcon: Icon = ({ className, ...iconProps }) => {
   );
 };
 
-export const PointFillIcon: Icon = ({ className, ...iconProps }) => {
+export const PointIcon: Icon = ({ className, ...iconProps }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -474,7 +451,7 @@ export const PointFillIcon: Icon = ({ className, ...iconProps }) => {
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
       <path
         d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z"
-        stroke-width="0"
+        strokeWidth="0"
         fill="currentColor"
       ></path>
     </svg>
@@ -487,7 +464,7 @@ export const ArchiveIcon: Icon = ({ className, ...iconProps }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(["h-6 w-6", className])}
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.25"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -498,6 +475,48 @@ export const ArchiveIcon: Icon = ({ className, ...iconProps }) => {
       <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
       <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"></path>
       <path d="M10 12l4 0"></path>
+    </svg>
+  );
+};
+
+export const SettingsIcon: Icon = ({ className, ...iconProps }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(["h-6 w-6", className])}
+      viewBox="0 0 24 24"
+      strokeWidth="1.25"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...iconProps}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
+      <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
+    </svg>
+  );
+};
+
+export const ArchiveOffIcon: Icon = ({ className, ...iconProps }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(["h-6 w-6", className])}
+      viewBox="0 0 24 24"
+      strokeWidth="1"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...iconProps}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M8 4h11a2 2 0 1 1 0 4h-7m-4 0h-3a2 2 0 0 1 -.826 -3.822"></path>
+      <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 1.824 -1.18m.176 -3.82v-7"></path>
+      <path d="M10 12h2"></path>
+      <path d="M3 3l18 18"></path>
     </svg>
   );
 };

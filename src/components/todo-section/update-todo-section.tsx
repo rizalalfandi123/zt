@@ -4,7 +4,7 @@ import FormTodoSection from "@/components/todo-section/form-todo-section";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type TodoSectionForm, todoSectionFormSchema } from "@/schema-and-types";
-import {  useAppDispatch, useAppSelector } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { todoBoardActions } from "@/stores/todo-column-store";
 
 interface AddNewTodoSectionProps extends React.PropsWithChildren {
@@ -18,8 +18,9 @@ const UpdateTodoSection: React.FunctionComponent<AddNewTodoSectionProps> = (prop
 
   const dispatch = useAppDispatch();
 
-  const defaultValues: TodoSectionForm = useAppSelector(store => ({name: store.todoBoard.value.columns[sectionId].name}))
-
+  const defaultValues: TodoSectionForm = useAppSelector((store) => ({
+    name: store.todoBoard.value.columns[sectionId].name,
+  }));
 
   const form = useForm<TodoSectionForm>({
     resolver: zodResolver(todoSectionFormSchema),
@@ -51,4 +52,4 @@ const UpdateTodoSection: React.FunctionComponent<AddNewTodoSectionProps> = (prop
   );
 };
 
-export default UpdateTodoSection
+export default UpdateTodoSection;

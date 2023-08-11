@@ -7,5 +7,5 @@ export type CreateTodoBoard = (state: TodoBoardState, payload: PayloadAction<Tod
 
 export const createTodoBoard: CreateTodoBoard = (state, { payload }) => {
   state.value.columns[payload.id] = payload;
-  state.value.ordered.push(payload.id)
+  state.value.ordered.push(payload.id);
 };

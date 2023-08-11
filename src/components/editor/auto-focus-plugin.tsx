@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
@@ -18,4 +18,4 @@ const AutoFucusPlugin: React.FunctionComponent<AutoFucusPluginProps> = ({ enable
   return null;
 };
 
-export default AutoFucusPlugin
+export default AutoFucusPlugin;

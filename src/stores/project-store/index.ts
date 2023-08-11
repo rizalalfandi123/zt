@@ -6,8 +6,10 @@ import { type UpdateProject, updateProject } from "./update-project.reducer";
 import { type DeleteProject, deleteProject } from "./delete-project.reducer";
 import { type AddNewTodoSection, addNewTodoSection } from "./add-new-todo-section.reducer";
 import { type DeleteTodoSection, deleteTodoSection } from "./delete-todo-section.reducer";
-import { type  AddProjectToFavourite, addProjectToFavourite } from "./add-project-to-favourite.reducer";
+import { type AddProjectToFavourite, addProjectToFavourite } from "./add-project-to-favourite.reducer";
 import { type RemoveProjectFromFavourite, removeProjectFromFavourite } from "./remove-project-from-favourite.reducer";
+import { type ArchiveProject, archiveProject } from "./archive-project.reducer";
+import { type UnArchiveProject, unarchiveProject } from "./unarchive-project.reducer";
 
 export interface ProjectState {
   value: Record<string, Project>;
@@ -20,7 +22,9 @@ export type ProjectActions = {
   addNewTodoSection: AddNewTodoSection;
   deleteTodoSection: DeleteTodoSection;
   addProjectToFavourite: AddProjectToFavourite;
-  removeProjectFromFavourite: RemoveProjectFromFavourite
+  removeProjectFromFavourite: RemoveProjectFromFavourite;
+  archiveProject: ArchiveProject;
+  unarchiveProject: UnArchiveProject;
 };
 
 const initialState: ProjectState = {
@@ -37,7 +41,9 @@ export const projectSlice = createSlice<ProjectState, ProjectActions>({
     addNewTodoSection,
     deleteTodoSection,
     addProjectToFavourite,
-    removeProjectFromFavourite
+    removeProjectFromFavourite,
+    archiveProject,
+    unarchiveProject,
   },
 });
 

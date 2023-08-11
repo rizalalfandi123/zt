@@ -21,8 +21,8 @@ const TodoOptions: React.FunctionComponent<TodoOptionsProps> = (props) => {
   };
 
   const handleEditTodo = () => {
-    dispatch(uiActions.setOpenedForm(todoId))
-  }
+    dispatch(uiActions.setOpenedForm(todoId));
+  };
 
   return (
     <Dropdown.Menu {...dropdownProps}>
