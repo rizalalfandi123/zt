@@ -6,5 +6,5 @@ import type { TodoBoardState } from "@/stores/todo-column-store";
 export type CreateTodo = (state: TodoBoardState, payload: PayloadAction<Todo>) => void;
 
 export const createTodo: CreateTodo = (state, { payload }) => {
-  state.value.columns[payload.sectionId].todo.push(payload);
+  state.value[payload.sectionId].todo.push(payload);
 };

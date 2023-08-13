@@ -10,6 +10,7 @@ import { type AddProjectToFavourite, addProjectToFavourite } from "./add-project
 import { type RemoveProjectFromFavourite, removeProjectFromFavourite } from "./remove-project-from-favourite.reducer";
 import { type ArchiveProject, archiveProject } from "./archive-project.reducer";
 import { type UnArchiveProject, unarchiveProject } from "./unarchive-project.reducer";
+import { type SetTodoSection, setTodoSection } from "./set-todo-section.reducer";
 
 export interface ProjectState {
   value: Record<string, Project>;
@@ -25,6 +26,7 @@ export type ProjectActions = {
   removeProjectFromFavourite: RemoveProjectFromFavourite;
   archiveProject: ArchiveProject;
   unarchiveProject: UnArchiveProject;
+  setTodoSection: SetTodoSection
 };
 
 const initialState: ProjectState = {
@@ -44,6 +46,7 @@ export const projectSlice = createSlice<ProjectState, ProjectActions>({
     removeProjectFromFavourite,
     archiveProject,
     unarchiveProject,
+    setTodoSection
   },
 });
 

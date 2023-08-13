@@ -9,7 +9,7 @@ export type UpdateTodoBoard = (
 ) => void;
 
 export const updateTodoBoard: UpdateTodoBoard = (state, { payload }) => {
-  const existTodoBoard = state.value.columns[payload.id] ?? {};
+  const existTodoBoard = state.value[payload.id] ?? {};
 
-  state.value.columns[payload.id] = { ...existTodoBoard, ...payload };
+  state.value[payload.id] = { ...existTodoBoard, ...payload };
 };

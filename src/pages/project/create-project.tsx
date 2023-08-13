@@ -24,6 +24,7 @@ const ModalCreateProject = () => {
     defaultValues: {
       name: "",
       color: "amber",
+      view: "BOARD"
     },
   });
 
@@ -34,7 +35,6 @@ const ModalCreateProject = () => {
       ...data,
       isFavourite: false,
       isAchive: false,
-      view: "BOARD",
       todoSections: [],
       id,
     };

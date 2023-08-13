@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { TodoBoard } from "@/schema-and-types";
+import type { TodoMap } from "@/schema-and-types";
 import { type CreateTodoBoard, createTodoBoard } from "./create-todo-board.reducer";
 import { type UpdateTodoBoard, updateTodoBoard } from "./update-todo-board.reducer";
 import { type DeleteTodoBoard, deleteTodoBoard } from "./delete-todo-board.reducer";
@@ -10,7 +10,7 @@ import { type DeleteTodo, deleteTodo } from "./delete-todo.reducer";
 import { type UpdateTodo, updateTodo } from "./update-todo.reducer";
 
 export interface TodoBoardState {
-  value: TodoBoard;
+  value: TodoMap;
 }
 
 export type TodoBoardActions = {
@@ -24,7 +24,7 @@ export type TodoBoardActions = {
 };
 
 const initialState: TodoBoardState = {
-  value: { columns: {}, ordered: [] },
+  value: {  },
 };
 
 export const todoBoardSlice = createSlice<TodoBoardState, TodoBoardActions>({
