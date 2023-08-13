@@ -11,27 +11,22 @@ import { reorderTodoMap } from "@/helpers";
 import { todoBoardActions } from "@/stores/todo-column-store";
 import { Todo, TodoBoard, TodoMap } from "@/schema-and-types";
 import { reorder } from "@/lib";
+import { projectActions } from "@/stores/project-store";
+import { boardSelector } from "@/selector";
 
 export const Project = () => {
   const dispatch = useAppDispatch();
 
   const projectId = useParams()["id"]!;
 
-  const board: TodoBoard = useAppSelector((store) => {
-    const sections = store.projects.value[projectId].todoSections;
-
-    const columns: TodoMap = sections.reduce((previousValue, currentValue) => {
-      return Object.assign(previousValue, { [currentValue]: store.todoBoard.value.columns[currentValue] });
-    }, {});
-
-    const ordered: string[] = store.todoBoard.value.ordered
-
-    return { columns, ordered };
-  });
+  const board: TodoBoard = useAppSelector((store) => boardSelector(store)[projectId]);
 
   const openedSectionForm = useAppSelector((store) => store.ui.value.openedForm === `new-section-${projectId}`);
 
-  const setBoard = (payload: TodoBoard) => dispatch(todoBoardActions.setTodoBoard(payload));
+  const setBoard = (payload: TodoBoard) => {
+    dispatch(todoBoardActions.setTodoBoard(payload.columns));
+    dispatch(projectActions.setTodoSection({ projectId, todoSections: payload.ordered }));
+  };
 
   const onDragEnd: DragDropContextProps["onDragEnd"] = (result) => {
     if (result.combine) {
@@ -99,6 +94,8 @@ export const Project = () => {
       columns: data.todoMap,
     });
   };
+
+  console.log({ board });
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

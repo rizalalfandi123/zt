@@ -45,7 +45,7 @@ export interface Project extends ProjectForm, SortableModel {
   id: string;
   isFavourite: boolean;
   isAchive: boolean;
-  view: ProjectView;
+  // view: ProjectView;
   todoSections: string[];
 }
 
@@ -57,3 +57,5 @@ export interface TodoSection extends TodoSectionForm {
 export type AppRoute = {
   isModal: boolean;
 } & RouteProps;
+
+export type ProjectListType = "ARCHIVE" | "ACTIVE" | "FAVOURITE";

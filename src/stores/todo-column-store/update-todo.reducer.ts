@@ -9,11 +9,11 @@ export type UpdateTodo = (
 ) => void;
 
 export const updateTodo: UpdateTodo = (state, { payload }) => {
-  const todoContext = state.value.columns[payload.sectionId].todo.findIndex((todo) => todo.id === payload.id);
+  const todoContext = state.value[payload.sectionId].todo.findIndex((todo) => todo.id === payload.id);
 
   if (todoContext !== -1) {
-    state.value.columns[payload.sectionId].todo[todoContext] = {
-      ...state.value.columns[payload.sectionId].todo[todoContext],
+    state.value[payload.sectionId].todo[todoContext] = {
+      ...state.value[payload.sectionId].todo[todoContext],
       ...payload,
     };
   }

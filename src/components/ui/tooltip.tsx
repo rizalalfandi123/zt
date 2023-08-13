@@ -30,5 +30,5 @@ Provider.defaultProps = {
   delayDuration: 300,
 };
 
-const Tooltip = { Root, Trigger, Content, Provider }
-export default Tooltip
+const Tooltip = { Root, Trigger, Content, Provider };
+export default Tooltip;

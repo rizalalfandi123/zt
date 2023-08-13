@@ -82,6 +82,6 @@ const Description = React.forwardRef<
 ));
 Description.displayName = Primitive.Description.displayName;
 
-const Dialog = { Root, Trigger, Content, Header, Footer, Title, Description }
+const Dialog = { Root, Trigger, Content, Header, Footer, Title, Description };
 
-export default Dialog
+export default Dialog;

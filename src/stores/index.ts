@@ -12,7 +12,7 @@ const allReducers = combineReducers({
   appSettings: appSettingsReducer,
   ui: uiReducer,
   projects: projectReducers,
-  todoBoard: todoBoardReducers
+  todoBoard: todoBoardReducers,
 });
 
 const rootReducers = persistReducer({ key: "ZAL_TODO", storage: localForageStorage, blacklist: ["ui"] }, allReducers);

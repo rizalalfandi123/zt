@@ -10,6 +10,6 @@ export type UpdateProject = (
 
 export const updateProject: UpdateProject = (state, { payload }) => {
   const existProject = state.value[payload.id] ?? {};
-  
+
   state.value[payload.id] = { ...existProject, ...payload };
 };

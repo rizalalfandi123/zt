@@ -4,14 +4,10 @@ import type { Project } from "@/schema-and-types";
 import type { ProjectState } from "@/stores/project-store";
 import { getMaximumIndex, getModelsAfterIndex } from "@/helpers";
 export interface CreateProjectPayload extends Omit<Project, "index"> {
-  targetIndex?: number
+  targetIndex?: number;
 }
 
-export type CreateProject = (
-  state: ProjectState,
-  payload: PayloadAction<CreateProjectPayload>,
-) => void;
-
+export type CreateProject = (state: ProjectState, payload: PayloadAction<CreateProjectPayload>) => void;
 
 export const createProject: CreateProject = (state, { payload }) => {
   const maxIndex = getMaximumIndex(state.value);

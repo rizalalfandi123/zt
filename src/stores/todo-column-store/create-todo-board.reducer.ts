@@ -6,6 +6,6 @@ import type { TodoBoardState } from "@/stores/todo-column-store";
 export type CreateTodoBoard = (state: TodoBoardState, payload: PayloadAction<TodoColumn>) => void;
 
 export const createTodoBoard: CreateTodoBoard = (state, { payload }) => {
-  state.value.columns[payload.id] = payload;
-  state.value.ordered.push(payload.id)
+  state.value[payload.id] = payload;
+  // state.value.ordered.push(payload.id);
 };

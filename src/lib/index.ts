@@ -1,2 +1,2 @@
 export * from "./utils";
-export * from "./local-forage-storage"
+export * from "./local-forage-storage";

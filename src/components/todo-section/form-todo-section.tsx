@@ -11,4 +11,4 @@ const FormTodoSection: React.FunctionComponent<{ form: UseFormReturn<TodoSection
   );
 };
 
-export default FormTodoSection
+export default FormTodoSection;

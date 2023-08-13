@@ -24,13 +24,20 @@ const ModalCreateProject = () => {
     defaultValues: {
       name: "",
       color: "amber",
+      view: "BOARD"
     },
   });
 
   const onSubmit = (data: ProjectForm) => {
     const id = uuid();
 
-    const project: CreateProjectPayload = { ...data, isFavourite: false, isAchive: false, view: "BOARD", todoSections: [], id };
+    const project: CreateProjectPayload = {
+      ...data,
+      isFavourite: false,
+      isAchive: false,
+      todoSections: [],
+      id,
+    };
 
     if (location.state.targetIndex) {
       project.targetIndex = location.state.targetIndex;

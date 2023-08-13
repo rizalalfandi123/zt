@@ -1,19 +1,26 @@
-
+import React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import * as Radio from "@/components/ui/radio-group";
 
 import TextField from "@/components/form/text-field";
 import SelectField from "@/components/form/select-field";
+import RadioGroup, { RadioOption } from "@/components/form/radio-group-field";
 
 import { FormProvider, UseFormReturn } from "react-hook-form";
-import { Label } from "@radix-ui/react-label";
 import { PointIcon } from "@/components/icons";
 import { cn, toTitleCase } from "@/lib";
 import { projectIndicator } from "@/constants";
 import { ProjectForm } from "@/schema-and-types";
-import { FormLabel } from "@/components/form/form";
 
 const FormProject: React.FunctionComponent<{ form: UseFormReturn<ProjectForm> }> = ({ form }) => {
+  const viewOptions = React.useMemo(() => {
+    const options: RadioOption[] = [
+      { label: "Board", value: "BOARD" },
+      { label: "List", value: "LIST" },
+    ];
+
+    return options;
+  }, []);
+
   return (
     <FormProvider {...form}>
       <TextField defaultValue="" control={form.control} name="name" label="Name" />
@@ -39,19 +46,9 @@ const FormProject: React.FunctionComponent<{ form: UseFormReturn<ProjectForm> }>
         })}
       </SelectField>
 
-      <Radio.RadioGroup>
-        <FormLabel htmlFor="ddj">View</FormLabel>
-        <div className="flex items-center space-x-2" id="ddj">
-          <Radio.RadioGroupItem value="comfortable" id="r2" />
-          <Label htmlFor="r2">Board</Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Radio.RadioGroupItem value="compact" id="r3" />
-          <Label htmlFor="r3">List</Label>
-        </div>
-      </Radio.RadioGroup>
+      <RadioGroup options={viewOptions} label="View" control={form.control} name="view" />
     </FormProvider>
   );
 };
 
-export default FormProject
+export default FormProject;

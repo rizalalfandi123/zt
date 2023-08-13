@@ -61,9 +61,9 @@ export const AppRoutes = () => {
               </React.Suspense>
             }
           />
-          
+
           {projectRoutes.map((route, index) => {
-            return <Route key={index} {...route} />
+            return <Route key={index} {...route} />;
           })}
         </Route>
       </Routes>
@@ -91,4 +91,3 @@ export const AppRoutes = () => {
     </>
   );
 };
-
