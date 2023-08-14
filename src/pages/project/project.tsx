@@ -1,138 +1,44 @@
+import Board from "@/components/board";
 import Button from "@/components/ui/button";
-import TodoList from "@/components/todo-list";
+import Tooltip, { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
-import { DragDropContext, Droppable, type DraggableLocation, type DragDropContextProps } from "@hello-pangea/dnd";
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { AddNewTodoSection } from "@/components/todo-section/create-todo-section";
-import { PlusIcon } from "@/components/icons";
-import { uiActions } from "@/stores/ui.slice";
-import { reorderTodoMap } from "@/helpers";
-import { todoBoardActions } from "@/stores/todo-column-store";
-import { Todo, TodoBoard, TodoMap } from "@/schema-and-types";
-import { reorder } from "@/lib";
-import { projectActions } from "@/stores/project-store";
-import { boardSelector } from "@/selector";
+import { AdjustmentIcon, DotsIcon } from "@/components/icons";
+import { useAppSelector } from "@/hooks";
 
 export const Project = () => {
-  const dispatch = useAppDispatch();
-
   const projectId = useParams()["id"]!;
 
-  const board: TodoBoard = useAppSelector((store) => boardSelector(store)[projectId]);
-
-  const openedSectionForm = useAppSelector((store) => store.ui.value.openedForm === `new-section-${projectId}`);
-
-  const setBoard = (payload: TodoBoard) => {
-    dispatch(todoBoardActions.setTodoBoard(payload.columns));
-    dispatch(projectActions.setTodoSection({ projectId, todoSections: payload.ordered }));
-  };
-
-  const onDragEnd: DragDropContextProps["onDragEnd"] = (result) => {
-    if (result.combine) {
-      if (result.type === "COLUMN") {
-        const shallow: string[] = [...board.ordered];
-
-        shallow.splice(result.source.index, 1);
-
-        setBoard({ ...board, ordered: shallow });
-
-        return;
-      }
-
-      const sectionContext = board.columns[result.source.droppableId];
-
-      const column: Todo[] = sectionContext.todo;
-
-      const withQuoteRemoved: Todo[] = [...column];
-
-      withQuoteRemoved.splice(result.source.index, 1);
-
-      const columns: TodoMap = {
-        ...board.columns,
-        [result.source.droppableId]: { ...sectionContext, todo: withQuoteRemoved },
-      };
-
-      setBoard({ ...board, columns });
-
-      return;
-    }
-
-    // dropped nowhere
-    if (!result.destination) {
-      return;
-    }
-
-    const source: DraggableLocation = result.source;
-
-    const destination: DraggableLocation = result.destination;
-
-    if (source.droppableId === destination.droppableId && source.index === destination.index) {
-      return;
-    }
-
-    // reordering column
-    if (result.type === "COLUMN") {
-      const ordered: string[] = reorder<string>(board.ordered, source.index, destination.index);
-
-      setBoard({
-        ...board,
-        ordered,
-      });
-
-      return;
-    }
-
-    const data = reorderTodoMap({
-      todoMap: board.columns,
-      source,
-      destination,
-    });
-
-    setBoard({
-      ...board,
-      columns: data.todoMap,
-    });
-  };
-
-  console.log({ board });
+  const project = useAppSelector((store) => store.projects.value[projectId]);
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="board" type="COLUMN" direction="horizontal">
-        {(provided) => {
-          return (
-            <div className="select-none max-w-full flex gap-4 h-full">
-              <div className="w-fit inline-flex gap-4 h-full" ref={provided.innerRef} {...provided.droppableProps}>
-                {board.ordered.map((key, index) => {
-                  return (
-                    <TodoList
-                      draggableId={key}
-                      title={board.columns[key].name}
-                      index={index}
-                      todos={board.columns[key].todo}
-                      key={key}
-                    />
-                  );
-                })}
+    <div className="flex flex-col w-full gap-4 h-full">
+      <div className="w-full flex justify-between items-center">
+        <h2 className="text-xl font-semibold">{project.name}</h2>
 
-                {provided.placeholder}
-              </div>
+        <div className="flex gap-2">
+          <Button variant="ghost" className="flex gap-2">
+            <AdjustmentIcon />
+            <span>View</span>
+          </Button>
 
-              <AddNewTodoSection onClose={() => dispatch(uiActions.setOpenedForm(null))} open={openedSectionForm}>
-                <Button
-                  className="w-full flex gap-1"
-                  variant="ghost"
-                  onClick={() => dispatch(uiActions.setOpenedForm(`new-section-${projectId}`))}
-                >
-                  <PlusIcon />
-                  Add New TodoSection
-                </Button>
-              </AddNewTodoSection>
-            </div>
-          );
-        }}
-      </Droppable>
-    </DragDropContext>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button size="icon" variant="ghost">
+                <DotsIcon />
+              </Button>
+            </TooltipTrigger>
+
+            <TooltipContent>
+              <p>Open More Project Actions</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </div>
+
+      <div className="h-full w-full overflow-x-auto">
+        <Board projectId={projectId} />
+      </div>
+    </div>
   );
 };

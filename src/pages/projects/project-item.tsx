@@ -1,7 +1,7 @@
 import React from "react";
 import Dropdown from "@/components/ui/dropdown-menu";
 import Button from "@/components/ui/button";
-import Tooltip from "@/components/ui/tooltip";
+import Tooltip, { TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib";
@@ -44,24 +44,22 @@ const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
         </NavLink>
 
         <Options project={project}>
-          <Tooltip.Provider>
-            <Tooltip.Root>
-              <Dropdown.Trigger asChild>
-                <Tooltip.Trigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className={cn(["invisible focus-visible:ring-0", { visible: showOptionButton }])}
-                  >
-                    <DotsIcon />
-                  </Button>
-                </Tooltip.Trigger>
-              </Dropdown.Trigger>
-              <Tooltip.Content>
-                <p>More Project Action</p>
-              </Tooltip.Content>
-            </Tooltip.Root>
-          </Tooltip.Provider>
+          <Tooltip>
+            <Dropdown.Trigger asChild>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={cn(["invisible focus-visible:ring-0", { visible: showOptionButton }])}
+                >
+                  <DotsIcon />
+                </Button>
+              </TooltipTrigger>
+            </Dropdown.Trigger>
+            <TooltipContent asChild>
+              <p>More Project Action</p>
+            </TooltipContent>
+          </Tooltip>
         </Options>
       </div>
     </Button>

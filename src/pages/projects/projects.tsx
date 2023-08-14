@@ -28,8 +28,6 @@ export const Projects = () => {
     return tab as ProjectListType;
   }, [location.search]);
 
-  console.log({ location }, queryString.parse(location.search), tabValue);
-
   const tabs: ProjectTab[] = React.useMemo(() => {
     const data: ProjectTab[] = [
       { label: "Active", value: "ACTIVE" },
