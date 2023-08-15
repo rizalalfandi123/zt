@@ -396,6 +396,26 @@ export const ArrowDownIcon: Icon = ({ className, ...iconProps }) => {
   );
 };
 
+export const ArrowSortIcon: Icon = ({ className, ...iconProps }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(["h-6 w-6", className])}
+      viewBox="0 0 24 24"
+      strokeWidth="1.25"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...iconProps}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M3 9l4 -4l4 4m-4 -4v14"></path>
+      <path d="M21 15l-4 4l-4 -4m4 4v-14"></path>
+    </svg>
+  );
+};
+
 export const HeartIcon: Icon = ({ className, ...iconProps }) => {
   return (
     <svg
@@ -544,6 +564,45 @@ export const AdjustmentIcon: Icon = ({ className, ...iconProps }) => {
       <path d="M17 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
       <path d="M4 18l11 0"></path>
       <path d="M19 18l1 0"></path>
+    </svg>
+  );
+};
+
+export const LayoutIcon: Icon = ({ className, ...iconProps }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(["h-6 w-6", className])}
+      viewBox="0 0 24 24"
+      strokeWidth="1.25"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...iconProps}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M3 3m0 1a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v16a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1zm6 -1v18m6 -18v18"></path>
+    </svg>
+  );
+};
+
+export const BoxMultipleIcon: Icon = ({ className, ...iconProps }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(["h-6 w-6", className])}
+      viewBox="0 0 24 24"
+      strokeWidth="1.25"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...iconProps}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M7 3m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"></path>
+      <path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2"></path>
     </svg>
   );
 };

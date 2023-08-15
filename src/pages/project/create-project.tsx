@@ -37,6 +37,8 @@ const ModalCreateProject = () => {
       isAchive: false,
       todoSections: [],
       id,
+      grouping: "NONE",
+      sorting: "DEFAULT"
     };
 
     if (location.state.targetIndex) {

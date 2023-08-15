@@ -20,6 +20,11 @@ const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
 
   const location = useLocation();
 
+  const buttonVariant = React.useMemo(
+    () => (location.pathname === `/project/${project.id}` ? "secondary" : "ghost"),
+    [location.pathname, project.id],
+  );
+
   const [showOptionButton, setShowOptionButton] = React.useState<boolean>(false);
 
   const indicatorColor = React.useMemo(() => {
@@ -28,7 +33,7 @@ const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
 
   return (
     <Button
-      variant={location.pathname === `/projects/${project.id}` ? "secondary" : "ghost"}
+      variant={buttonVariant}
       className="w-full justify-start block"
       onMouseOver={() => setShowOptionButton(true)}
       onMouseLeave={() => setShowOptionButton(false)}
@@ -57,7 +62,7 @@ const ProjectItem: React.FunctionComponent<ProjectItemProps> = (props) => {
               </TooltipTrigger>
             </Dropdown.Trigger>
             <TooltipContent asChild>
-              <p>More Project Action</p>
+              <span>More Project Action</span>
             </TooltipContent>
           </Tooltip>
         </Options>

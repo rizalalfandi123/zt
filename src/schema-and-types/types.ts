@@ -25,6 +25,10 @@ export interface TodoBoard {
 
 export type ProjectView = "BOARD" | "LIST";
 
+export type ProjectGrouping = "NONE" | "DUE_DATE" | "DUE_ADDED" | "PRIORITY" | "LABEL";
+
+export type ProjectSorting = "DEFAULT" | "DUE_DATE" | "DUE_ADDED" | "PRIORITY" | "LABEL";
+
 export type ScreenMode = "dark" | "light";
 
 export type AppTheme = Record<ScreenMode, string>;
@@ -45,7 +49,9 @@ export interface Project extends ProjectForm, SortableModel {
   id: string;
   isFavourite: boolean;
   isAchive: boolean;
-  // view: ProjectView;
+  view: ProjectView;
+  sorting: ProjectSorting;
+  grouping: ProjectGrouping;
   todoSections: string[];
 }
 

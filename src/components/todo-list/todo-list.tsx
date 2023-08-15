@@ -2,6 +2,7 @@ import React from "react";
 import Todo from "@/components/todo";
 import Button from "@/components/ui/button";
 import UpdateTodoSection from "@/components/todo-section/update-todo-section";
+import TodoListOptions from "./todo-list-options";
 
 import { Draggable, type DraggableProps, Droppable } from "@hello-pangea/dnd";
 import { useParams } from "react-router-dom";
@@ -13,7 +14,6 @@ import { cn } from "@/lib";
 import { TodoForm, TodoFormProps } from "@/components/todo/todo-form";
 import { uiActions } from "@/stores/ui.slice";
 import { todoBoardActions } from "@/stores/todo-column-store";
-import TodoListOptions from "./todo-list-options";
 
 interface DraggableTodoListProps extends Omit<DraggableProps, "children"> {
   title: string;
@@ -102,7 +102,6 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
                         return (
                           <Todo
                             index={index}
-                            sectionId={draggableProps.draggableId}
                             draggableId={todo.id}
                             todo={todo}
                             key={todo.id}

@@ -28,7 +28,7 @@ export const Layout: React.FunctionComponent<LayoutProps> = (props) => {
             onTouchStart={onTouchStart}
           />
 
-          <main className="grow overflow-x-auto px-2">
+          <main className="grow overflow-x-auto p-2">
             <Outlet />
           </main>
         </div>

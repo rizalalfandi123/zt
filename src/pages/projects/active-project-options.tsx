@@ -38,10 +38,10 @@ const ActiveProjectOptions: ProjectOptionsComponents = ({ children, project }) =
     const options: ProjectOption[] = [
       { icon: ArrowUpIcon, label: "Add Project Above", onClick: handleAddProjectInSpecificIndex(project.index) },
       { icon: ArrowDownIcon, label: "Add Project Below", onClick: handleAddProjectInSpecificIndex(project.index + 1) },
-      <hr />,
+      <Dropdown.Separator />,
       { icon: EditIcon, label: "Edit", onClick: handleUpdateProject },
       { icon: HeartIcon, label: "Add to Favorite", onClick: handleAddToFavourite },
-      <hr />,
+      <Dropdown.Separator />,
       { icon: ArchiveIcon, label: "Archive", onClick: handleArchive },
       { icon: TrashIcon, label: "Delete", onClick: handleDeleteProject },
     ];

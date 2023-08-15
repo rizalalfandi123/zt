@@ -74,9 +74,9 @@ export const Projects = () => {
         </Button>
       </div>
 
-      {tabs.map((tab, index) => {
+      {tabs.map((tab) => {
         return (
-          <div key={index} className={cn(["hidden space-y-1 w-full", { "flex flex-col": tabValue === tab.value }])}>
+          <div key={tab.value} className={cn(["hidden space-y-1 w-full", { "flex flex-col": tabValue === tab.value }])}>
             <InnerMapProjectItem type={tab.value} />
           </div>
         );

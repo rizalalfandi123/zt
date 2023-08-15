@@ -84,8 +84,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
                 </button>
               </TooltipTrigger>
 
-              <TooltipContent>
-                <p>Toggle list of favourite projects</p>
+              <TooltipContent asChild>
+                <span>Toggle list of favourite projects</span>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -110,8 +110,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
             </NavLink>
             <div className="flex gap-1">
               <Tooltip>
-                <TooltipContent>
-                  <p>Toggle list of projects</p>
+                <TooltipContent asChild>
+                  <span>Add new project</span>
                 </TooltipContent>
                 <TooltipTrigger asChild>
                   <NavLink to="/create-project" state={{ backgroundLocation: location }}>
@@ -135,8 +135,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
                   </button>
                 </TooltipTrigger>
 
-                <TooltipContent>
-                  <p>Toggle list of projects</p>
+                <TooltipContent asChild>
+                  <span>Toggle list of projects</span>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -156,13 +156,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
 const InnerMapMenu = React.memo<{ menus: Menu[]; locationPath: string }>(({ menus, locationPath }) => {
   return (
     <>
-      {menus.map(({ icon, label, path, suffix }, index) => {
+      {menus.map(({ icon, label, path, suffix }) => {
         return (
           <Button
             variant={path === locationPath ? "secondary" : "ghost"}
             className="w-full justify-start block relative"
             asChild
-            key={index}
+            key={path}
           >
             <NavLink to={path} className={cn({ "flex justify-between": suffix !== undefined })}>
               <div className="flex gap-2 items-center">

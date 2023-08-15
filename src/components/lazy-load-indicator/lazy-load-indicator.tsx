@@ -1,10 +1,16 @@
-import { LoaderIcon } from "@/components/icons";
+import React from "react"
+import { useRef } from "react";
+import LoadingBar, { type LoadingBarRef } from "react-top-loading-bar";
 
 export const LazyLoadIndicator = () => {
-  return (
-    <div className="p-2 rounded-lg flex gap-2 fixed bottom-2 right-2 border border-border">
-      <p>Loading</p>
-      <LoaderIcon className="w-6 h-6 z-50 text-red-500 animate-spin" />
-    </div>
-  );
+
+  const ref = useRef<LoadingBarRef | null>(null)
+
+  React.useEffect(() => {
+    if (ref.current) {
+      ref.current.staticStart()
+    }
+  }, [ref])
+
+  return <LoadingBar height={4} color="#f11946" ref={ref} />;
 };
