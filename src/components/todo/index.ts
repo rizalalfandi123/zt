@@ -1,3 +1,2 @@
-export { TodoBoard as default, type TodoProps } from "./todo.board";
-export * from "./todo.board";
-export * from "../todo-list/todo-list";
+export { TodoBoard as default, type TodoProps } from "./todo";
+export * from "./todo";

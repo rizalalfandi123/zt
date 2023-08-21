@@ -10,14 +10,16 @@ import { type TodoSectionForm, todoSectionFormSchema } from "@/schema-and-types"
 import { useAppDispatch } from "@/hooks";
 import { todoBoardActions } from "@/stores/todo-column-store";
 import { projectActions } from "@/stores/project-store";
+import { cn } from "@/lib";
 
 interface AddNewTodoSectionProps extends React.PropsWithChildren {
   open: boolean;
   onClose: () => void;
+  className?: string
 }
 
 export const AddNewTodoSection: React.FunctionComponent<AddNewTodoSectionProps> = (props) => {
-  const { open, children, onClose } = props;
+  const { open, children, onClose, className } = props;
 
   const projectId = useParams()["id"]!;
 
@@ -39,7 +41,7 @@ export const AddNewTodoSection: React.FunctionComponent<AddNewTodoSectionProps> 
   };
 
   return (
-    <div className="w-72 shrink-0">
+    <div className={cn("shrink-0", className)}>
       {open ? (
         <div className="w-full flex flex-col gap-4 border border-slate-500 p-2 rounded-lg">
           <FormTodoSection form={form} />

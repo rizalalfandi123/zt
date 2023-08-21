@@ -14,6 +14,7 @@ import { cn } from "@/lib";
 import { TodoForm, TodoFormProps } from "@/components/todo/todo-form";
 import { uiActions } from "@/stores/ui.slice";
 import { todoBoardActions } from "@/stores/todo-column-store";
+import { PlusIcon } from "../icons";
 
 interface DraggableTodoListProps extends Omit<DraggableProps, "children"> {
   title: string;
@@ -26,6 +27,8 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
   const dispatch = useAppDispatch();
 
   const projectId = useParams()["id"]!;
+
+  const project = useAppSelector((store) => store.projects.value[projectId]);
 
   const [isHover, setIsHover] = React.useState<boolean>(false);
 
@@ -71,11 +74,15 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
     <Draggable {...draggableProps} disableInteractiveElementBlocking>
       {(provided) => {
         return (
-          <div className="py-2 bg-background" ref={provided.innerRef} {...provided.draggableProps}>
+          <div className={cn("py-2 bg-background", {'py-1': project.view === "LIST"})} ref={provided.innerRef} {...provided.draggableProps}>
             <Droppable droppableId={draggableProps.draggableId} type="TODO">
               {(dropProvided) => {
                 return (
-                  <div {...dropProvided.droppableProps} ref={dropProvided.innerRef} className="h-full w-72">
+                  <div
+                    {...dropProvided.droppableProps}
+                    ref={dropProvided.innerRef}
+                    className={cn(["h-full w-72", { "w-full": project.view === "LIST" }])}
+                  >
                     <div
                       className={cn([
                         "flex flex-col gap-2 w-full rounded-lg relative",
@@ -99,35 +106,24 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
                       </UpdateTodoSection>
 
                       {todos.map((todo, index) => {
-                        return (
-                          <Todo
-                            index={index}
-                            draggableId={todo.id}
-                            todo={todo}
-                            key={todo.id}
-                          />
-                        );
+                        return <Todo index={index} draggableId={todo.id} todo={todo} key={todo.id} view={project.view} />;
                       })}
 
                       <TodoListOptions todoSectionId={draggableProps.draggableId} />
 
                       {openedNewTodoForm ? (
-                        <TodoForm
-                          onClose={() => dispatch(uiActions.setOpenedForm(null))}
-                          onSave={handleSaveTodo}
-                          containerClassname={cn({ "mt-4": todos.length > 0 })}
-                        />
+                        <TodoForm onClose={() => dispatch(uiActions.setOpenedForm(null))} onSave={handleSaveTodo} />
                       ) : (
                         <Button
                           variant="ghost"
                           className={cn([
+                            "transition-all duration-300 w-full flex items-center gap-1",
                             { "opacity-0": isUserDraggingTodo },
-                            { "mt-4": todos.length > 0 },
-                            "transition-all duration-300 w-full",
+                            { "w-fit text-start": project.view === "LIST" },
                           ])}
                           onClick={handleClickNewTodo}
                         >
-                          New Todo
+                          <PlusIcon /> New Todo
                         </Button>
                       )}
                     </div>

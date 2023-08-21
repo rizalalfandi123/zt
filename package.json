@@ -9,7 +9,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier ./src --write",
-    "desktop:dev": "yarn tauri dev"
+    "desktop:dev": "yarn tauri dev",
+    "android:run": "cap run android"
   },
   "dependencies": {
     "@capacitor/android": "^5.2.3",

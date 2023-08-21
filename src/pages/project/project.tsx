@@ -16,16 +16,14 @@ export const Project = () => {
 
   const project = useAppSelector((store) => store.projects.value[projectId]);
 
-  const todoView = React.useMemo(
-    () => (project.view === "LIST" ? <List /> : <Board projectId={project.id} />),
-    [project],
-  );
+  // const todoView = React.useMemo(
+  //   () => (project.view === "LIST" ? <List /> : <Board projectId={project.id} />),
+  //   [project],
+  // );
 
   return (
     <div className={cn(["flex flex-col w-full gap-4 h-full", { "max-w-2xl m-auto": project.view === "LIST" }])}>
-      <div
-        className="w-full flex justify-between items-center"
-      >
+      <div className="w-full flex justify-between items-center">
         <h2 className="text-xl font-semibold">{project.name}</h2>
 
         <div className="flex gap-2">
@@ -54,7 +52,9 @@ export const Project = () => {
         </div>
       </div>
 
-      <div className="h-full w-full overflow-x-auto">{todoView}</div>
+      <div className="h-full w-full overflow-x-auto">
+        <Board project={project} />
+      </div>
     </div>
   );
 };

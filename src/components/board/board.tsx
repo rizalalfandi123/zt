@@ -2,22 +2,26 @@ import Button from "@/components/ui/button";
 import TodoList from "@/components/todo-list";
 
 import { DragDropContext, Droppable, type DraggableLocation, type DragDropContextProps } from "@hello-pangea/dnd";
-import type { Todo, TodoBoard, TodoMap } from "@/schema-and-types";
+import type { Project, Todo, TodoBoard, TodoMap } from "@/schema-and-types";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { AddNewTodoSection } from "@/components/todo-section/create-todo-section";
 import { PlusIcon } from "@/components/icons";
 import { uiActions } from "@/stores/ui.slice";
 import { todoBoardActions } from "@/stores/todo-column-store";
 import { reorderTodoMap } from "@/helpers";
-import { reorder } from "@/lib";
+import { cn, reorder } from "@/lib";
 import { projectActions } from "@/stores/project-store";
 import { boardSelector } from "@/selector";
 
 interface BoardProps {
-  projectId: string;
+  project: Project;
 }
 
-export const Board: React.FunctionComponent<BoardProps> = ({ projectId }) => {
+export const Board: React.FunctionComponent<BoardProps> = (props) => {
+  const {
+    project: { id: projectId, view: projectView },
+  } = props;
+
   const dispatch = useAppDispatch();
 
   const board: TodoBoard = useAppSelector((store) => boardSelector(store)[projectId]);
@@ -98,11 +102,11 @@ export const Board: React.FunctionComponent<BoardProps> = ({ projectId }) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="board" type="COLUMN" direction="horizontal">
+      <Droppable droppableId="board" type="COLUMN" direction={projectView === "LIST" ? "vertical" : "horizontal"}>
         {(provided) => {
           return (
-            <div className="select-none max-w-full flex gap-4 h-full">
-              <div className="w-fit inline-flex gap-4 h-full" ref={provided.innerRef} {...provided.droppableProps}>
+            <div className={cn("select-none max-w-full flex flex-row gap-4 h-full", { "flex-col": projectView === "LIST" })}>
+              <div className={cn("w-fit inline-flex gap-4 h-full", { "flex w-full h-fit flex-col gap-0 px-2": projectView === "LIST" })} ref={provided.innerRef} {...provided.droppableProps}>
                 {board.ordered.map((key, index) => {
                   return (
                     <TodoList
@@ -118,14 +122,14 @@ export const Board: React.FunctionComponent<BoardProps> = ({ projectId }) => {
                 {provided.placeholder}
               </div>
 
-              <AddNewTodoSection onClose={() => dispatch(uiActions.setOpenedForm(null))} open={openedSectionForm}>
+              <AddNewTodoSection onClose={() => dispatch(uiActions.setOpenedForm(null))} open={openedSectionForm} className={cn("w-72", {"w-full": projectView === "LIST"})}>
                 <Button
                   className="w-full flex gap-1"
                   variant="ghost"
                   onClick={() => dispatch(uiActions.setOpenedForm(`new-section-${projectId}`))}
                 >
                   <PlusIcon />
-                  Add New TodoSection
+                  Add New Section
                 </Button>
               </AddNewTodoSection>
             </div>

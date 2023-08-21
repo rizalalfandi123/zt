@@ -8,7 +8,7 @@ import TodoOptions from "./todo-options";
 import { Draggable, type DraggableProps } from "@hello-pangea/dnd";
 import { DotsIcon } from "@/components/icons";
 import { TodoForm, TodoFormProps } from "@/components/todo/todo-form";
-import { Todo as ITodo } from "@/schema-and-types";
+import { Todo as ITodo, ProjectView } from "@/schema-and-types";
 import { uiActions } from "@/stores/ui.slice";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { cn } from "@/lib";
@@ -16,12 +16,13 @@ import { todoBoardActions } from "@/stores/todo-column-store";
 
 export interface TodoProps extends React.ComponentProps<"div"> {
   todo: ITodo;
+  view: ProjectView;
 }
 
 interface DraggableTodoProps extends Omit<DraggableProps, "children">, TodoProps {}
 
 const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
-  const { todo, ...draggableProps } = props;
+  const { todo, view, ...draggableProps } = props;
 
   const [isHover, setIsHover] = React.useState<boolean>(false);
 
@@ -29,25 +30,35 @@ const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
 
   const isUserDraggingTodo = useAppSelector((store) => store.ui.value.isUserDraggingTodo);
 
-  const title = React.useMemo(() => {
-    return (
+  const todoContent = React.useMemo(() => {
+    const title = (
       <Editor
         initialConfig={{ namespace: "todo-title", editorState: todo.title, editable: false }}
         editableProps={{ className: "border-none line-clamp-1 my-[2px]" }}
         placeholder={null}
       />
     );
-  }, [todo.title]);
 
-  const description = React.useMemo(() => {
-    return (
+    const description = (
       <Editor
         initialConfig={{ namespace: "todo-description", editorState: todo.description, editable: false }}
         editableProps={{ className: "border-none line-clamp-2" }}
         placeholder={null}
       />
     );
-  }, [todo.description]);
+
+    if (todo.description) {
+      return (
+        <div className="flex flex-col w-[calc(100%-44px)]">
+          {title}
+          <hr className="my-2" />
+          {description}
+        </div>
+      );
+    }
+
+    return title;
+  }, [todo]);
 
   const isEdit = useAppSelector((store) => store.ui.value.openedForm === todo.id);
 
@@ -101,15 +112,7 @@ const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
               <div className="flex gap-3 items-center">
                 <Checkbox />
 
-                {todo.description ? (
-                  <div className="flex flex-col w-[calc(100%-44px)]">
-                    {title}
-                    <hr className="my-2" />
-                    {description}
-                  </div>
-                ) : (
-                  title
-                )}
+                {todoContent}
               </div>
             </div>
           </div>
@@ -119,6 +122,6 @@ const Component: React.FunctionComponent<DraggableTodoProps> = (props) => {
   );
 };
 
-Component.displayName = "Todo Board";
+Component.displayName = "Todo";
 
 export const TodoBoard = React.memo<DraggableTodoProps>(Component);
