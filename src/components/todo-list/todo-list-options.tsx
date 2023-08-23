@@ -4,11 +4,12 @@ import Button from "@/components/ui/button";
 
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { DotsIcon } from "@/components/icons";
-import { cn, delay } from "@/lib";
+import { DotsIcon, EditIcon, TrashIcon } from "@/components/icons";
+import { cn, delay, isOptionModel } from "@/lib";
 import { uiActions } from "@/stores/ui.slice";
 import { todoBoardActions } from "@/stores/todo-column-store";
 import { projectActions } from "@/stores/project-store";
+import { ModelOption } from "@/schema-and-types";
 
 interface TodoListOptionsProps {
   todoSectionId: string;
@@ -38,6 +39,16 @@ const TodoListOptions: React.FunctionComponent<TodoListOptionsProps> = (props) =
     dispatch(uiActions.setOpenedForm(`edit-section-${todoSectionId}`));
   };
 
+  const options: ModelOption[] = React.useMemo(() => {
+    const options: ModelOption[] = [
+      { icon: EditIcon, label: "Edit", onClick: handleEditTodoSection },
+      <Dropdown.Separator />,
+      { icon: TrashIcon, label: "Delete", onClick: handleDeleteTodoSection },
+    ];
+
+    return options;
+  }, []);
+
   return (
     <Dropdown.Menu open={isShowOption} onOpenChange={(newValue) => setIsShowOpen(newValue)}>
       <Dropdown.Trigger asChild>
@@ -50,10 +61,19 @@ const TodoListOptions: React.FunctionComponent<TodoListOptionsProps> = (props) =
         </Button>
       </Dropdown.Trigger>
 
-      <Dropdown.Content>
-        <Dropdown.Item onClick={handleDeleteTodoSection}>Delete</Dropdown.Item>
-        <Dropdown.Separator />
-        <Dropdown.Item onClick={handleEditTodoSection}>Edit</Dropdown.Item>
+      <Dropdown.Content className="w-56 space-y-1">
+        {options.map((option, index) => {
+          if (!isOptionModel(option)) {
+            return <React.Fragment key={index}>{option}</React.Fragment>;
+          }
+
+          return (
+            <Dropdown.Item onClick={option.onClick} key={index}>
+              <option.icon className="mr-2 w-5 h-5" />
+              {option.label}
+            </Dropdown.Item>
+          );
+        })}
       </Dropdown.Content>
     </Dropdown.Menu>
   );

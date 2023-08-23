@@ -5,7 +5,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/hooks";
 import { projectActions } from "@/stores/project-store";
 import { EditIcon, TrashIcon, ArrowDownIcon, ArrowUpIcon, HeartIcon, ArchiveIcon } from "@/components/icons";
-import { type ProjectOption, type ProjectOptionsComponents, isOptionItem } from "./project-options-utils";
+import { type ProjectOptionsComponents } from "./project-options-utils";
+import { type ModelOption } from "@/schema-and-types";
+import { isOptionModel } from "@/lib";
 
 const ActiveProjectOptions: ProjectOptionsComponents = ({ children, project }) => {
   const dispatch = useAppDispatch();
@@ -34,8 +36,8 @@ const ActiveProjectOptions: ProjectOptionsComponents = ({ children, project }) =
     dispatch(projectActions.archiveProject(project.id));
   };
 
-  const projectOptions: ProjectOption[] = React.useMemo(() => {
-    const options: ProjectOption[] = [
+  const projectOptions: ModelOption[] = React.useMemo(() => {
+    const options: ModelOption[] = [
       { icon: ArrowUpIcon, label: "Add Project Above", onClick: handleAddProjectInSpecificIndex(project.index) },
       { icon: ArrowDownIcon, label: "Add Project Below", onClick: handleAddProjectInSpecificIndex(project.index + 1) },
       <Dropdown.Separator />,
@@ -54,7 +56,7 @@ const ActiveProjectOptions: ProjectOptionsComponents = ({ children, project }) =
       {children}
       <Dropdown.Content className="w-56 space-y-1">
         {projectOptions.map((option, index) => {
-          if (!isOptionItem(option)) {
+          if (!isOptionModel(option)) {
             return <React.Fragment key={index}>{option}</React.Fragment>;
           }
 

@@ -142,8 +142,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, ...divProps }) => {
             </div>
           </div>
 
-          <animated.div className="space-y-1 overflow-y-hidden" style={projectStyle}>
-            <div ref={projectRef}>
+          <animated.div className="overflow-y-hidden" style={projectStyle}>
+            <div className="space-y-1" ref={projectRef}>
               <InnerMapProjectItem type="ACTIVE" />
             </div>
           </animated.div>

@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+
+
 module.exports = {
   darkMode: ["class", '[data-screen-mode="dark"]'],
   content: [
@@ -12,11 +14,11 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1420px",
       },
     },
     fontFamily: {
-      'sans': ['"Poppins"', 'monospace',],
+      'sans': ['"Poppins"', 'monospace',].join(','),
     },
     extend: {
       colors: {

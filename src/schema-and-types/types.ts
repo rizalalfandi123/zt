@@ -9,6 +9,8 @@ export interface OptionItem {
   onClick: () => void;
 }
 
+export type ModelOption = OptionItem | React.ReactNode
+
 export interface SortableModel {
   index: number;
 }

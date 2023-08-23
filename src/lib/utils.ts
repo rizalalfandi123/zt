@@ -1,3 +1,4 @@
+import { ModelOption, OptionItem } from "@/schema-and-types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -29,4 +30,9 @@ export function reorder<T>(list: T[], startIndex: number, endIndex: number): T[]
   result.splice(endIndex, 0, removed);
 
   return result;
+}
+
+
+export function isOptionModel(item: ModelOption): item is OptionItem {
+  return (item as OptionItem).label !== undefined;
 }

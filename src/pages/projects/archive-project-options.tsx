@@ -4,7 +4,9 @@ import Dropdown from "@/components/ui/dropdown-menu";
 import { useAppDispatch } from "@/hooks";
 import { projectActions } from "@/stores/project-store";
 import { ArchiveOffIcon, TrashIcon } from "@/components/icons";
-import { type ProjectOption, type ProjectOptionsComponents, isOptionItem } from "./project-options-utils";
+import { type ProjectOptionsComponents } from "./project-options-utils";
+import { type ModelOption } from "@/schema-and-types";
+import { isOptionModel } from "@/lib";
 
 const ArchiveProjectOptions: ProjectOptionsComponents = ({ children, project }) => {
   const dispatch = useAppDispatch();
@@ -17,8 +19,8 @@ const ArchiveProjectOptions: ProjectOptionsComponents = ({ children, project }) 
     dispatch(projectActions.deleteProject(project.id));
   };
 
-  const options: ProjectOption[] = React.useMemo(() => {
-    const options: ProjectOption[] = [
+  const options: ModelOption[] = React.useMemo(() => {
+    const options: ModelOption[] = [
       { icon: ArchiveOffIcon, label: "Unarchive", onClick: unarchiveProject },
       { icon: TrashIcon, label: "Delete", onClick: handleDeleteProject },
     ];
@@ -31,7 +33,7 @@ const ArchiveProjectOptions: ProjectOptionsComponents = ({ children, project }) 
       {children}
       <Dropdown.Content className="w-56 space-y-1">
         {options.map((option, index) => {
-          if (!isOptionItem(option)) {
+          if (!isOptionModel(option)) {
             return <React.Fragment key={index}>{option}</React.Fragment>;
           }
 

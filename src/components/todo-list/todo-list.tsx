@@ -85,9 +85,8 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
                   >
                     <div
                       className={cn([
-                        "flex flex-col gap-2 w-full rounded-lg relative",
+                        "flex flex-col gap-2 w-full rounded-lg relative px-2",
                         { "outline outline-1 outline-border shadow-md": isHover },
-                        { "p-2": todos.length > 0 },
                       ])}
                     >
                       <UpdateTodoSection
@@ -117,7 +116,7 @@ const Component: React.FunctionComponent<DraggableTodoListProps> = (props) => {
                         <Button
                           variant="ghost"
                           className={cn([
-                            "transition-all duration-300 w-full flex items-center gap-1",
+                            "w-full flex items-center gap-1",
                             { "opacity-0": isUserDraggingTodo },
                             { "w-fit text-start": project.view === "LIST" },
                           ])}
